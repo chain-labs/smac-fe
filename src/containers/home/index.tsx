@@ -48,6 +48,7 @@ const introAnimation = () => {
       duration: 1.3,
       ease: Power3.easeIn,
       onComplete: () => {
+        // @ts-ignore
         document.querySelector(".overlay").style.display = "none";
       },
     }
