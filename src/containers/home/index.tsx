@@ -4,6 +4,7 @@ import Text from "src/components/Text";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect } from "react";
+import theme from "src/styleguide/theme";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,7 +20,21 @@ const scrollBannerAnimation = function () {
       y: -10,
       scrollTrigger: {
         trigger: ".body",
-        markers: true,
+        // markers: true,
+        scrub: true,
+      },
+    }
+  );
+
+  gsap.fromTo(
+    ".body",
+    {
+      clipPath: "polygon(0% 0%, 50% 7%, 100% 0%, 100% 100%, 0% 100%)",
+    },
+    {
+      clipPath: "polygon(0% 0%, 50% -4%, 100% 0%, 100% 100%, 0% 100%)",
+      scrollTrigger: {
+        trigger: ".body",
         scrub: true,
       },
     }
@@ -47,29 +62,54 @@ const HomeComp = () => {
           width="16"
           layout="responsive"
         ></Image>
+        <Box
+          bg="black-10"
+          opacity="50%"
+          height="120vh"
+          width="100vw"
+          position="absolute"
+          top="0"
+          left="0"
+        ></Box>
       </Box>
       <Box
-        bg="black-10"
         position="absolute"
-        top="70%"
+        top="50%"
         left="50%"
         transform="translateX(-50%)"
-        zIndex={2}
-        px="3.2rem"
-        py="2rem"
-        borderRadius="4px"
-        cursor="pointer"
-        fontWeight="bold"
+        column
+        center
+        minWidth="70%"
       >
-        <Text fontSize="2rem" color="white">
-          Let's Begin
+        <Text
+          color="white"
+          fontSize="72px"
+          fontWeight="extra-bold"
+          mb="4rem"
+          textTransform="uppercase"
+          textAlign="center"
+        >
+          Space Man Astro Club
         </Text>
+        <Box
+          bg="yellow-10"
+          zIndex={2}
+          px="4.8rem"
+          py="2rem"
+          borderRadius="4px"
+          cursor="pointer"
+          fontWeight="bold"
+        >
+          <Text fontSize="2rem" color="black-20">
+            Let's Begin
+          </Text>
+        </Box>
       </Box>
       <Box
         // backgroundImage="linear-gradient(to bottom, rgba(0, 0, 0, 0) -10%, rgba(0, 0, 0, 1) 10%);"
         color="white"
         className="body"
-        bg="black-20"
+        bg="blue-10"
         mt={{ deskM: "60rem", deskL: "80rem" }}
         css={`
           clip-path: polygon(0% 0%, 50% 4%, 100% 0%, 100% 100%, 0% 100%);
