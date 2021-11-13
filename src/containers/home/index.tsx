@@ -1,7 +1,7 @@
 import Box from "src/components/Box";
 import Image from "next/image";
 import Text from "src/components/Text";
-import { gsap } from "gsap";
+import { gsap, Power3 } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect } from "react";
 import theme from "src/styleguide/theme";
@@ -26,32 +26,59 @@ const scrollBannerAnimation = function () {
     }
   );
 
+  gsap.to(".body", {
+    clipPath: "polygon(0% 0%, 50% -4%, 100% 0%, 100% 100%, 0% 100%)",
+    scrollTrigger: {
+      trigger: ".body",
+      scrub: true,
+    },
+  });
+};
+
+const introAnimation = () => {
   gsap.fromTo(
-    ".body",
+    ".overlay",
     {
-      clipPath: "polygon(0% 0%, 50% 7%, 100% 0%, 100% 100%, 0% 100%)",
+      yPercent: 0,
+      clipPath: "polygon(0% 0%, 50% -4%, 100% 0%, 100% 100%, 0% 100%)",
     },
     {
-      clipPath: "polygon(0% 0%, 50% -4%, 100% 0%, 100% 100%, 0% 100%)",
-      scrollTrigger: {
-        trigger: ".body",
-        scrub: true,
+      clipPath: "polygon(0% 0%, 50% 7%, 100% 0%, 100% 100%, 0% 100%)",
+      yPercent: 100,
+      duration: 1.3,
+      ease: Power3.easeIn,
+      onComplete: () => {
+        document.querySelector(".overlay").style.display = "none";
       },
     }
   );
+
+  gsap.from("#headline", { autoAlpha: 0, y: -10, duration: 0.5, delay: 0.5 });
 };
 
 const HomeComp = () => {
   useEffect(() => {
+    window.onload = () => {
+      introAnimation();
+    };
     scrollBannerAnimation();
   }, []);
   return (
     <Box>
       <Box
+        height="100vh"
+        width="100vw"
+        bg="blue-10"
+        zIndex={10}
+        className="overlay"
+        position="absolute"
+        top="0"
+      ></Box>
+      <Box
         width="100vw"
         height="100vh"
         position="fixed"
-        top={-80}
+        top={{ mobS: 0, tabS: -10 }}
         zIndex={-1}
         className="banner"
       >
@@ -74,16 +101,18 @@ const HomeComp = () => {
       </Box>
       <Box
         position="absolute"
-        top="50%"
+        top="30%"
         left="50%"
         transform="translateX(-50%)"
         column
         center
         minWidth="70%"
+        zIndex={3}
       >
         <Text
+          id="headline"
           color="white"
-          fontSize="72px"
+          fontSize={{ mobS: "3.6rem", tabS: "7.2rem" }}
           fontWeight="extra-bold"
           mb="4rem"
           textTransform="uppercase"
@@ -109,9 +138,12 @@ const HomeComp = () => {
         color="white"
         className="body"
         bg="blue-10"
-        mt={{ deskM: "60rem", deskL: "80rem" }}
+        mt={{ mobS: "15rem", deskM: "60rem", deskL: "80rem" }}
         css={`
-          clip-path: polygon(0% 0%, 50% 4%, 100% 0%, 100% 100%, 0% 100%);
+          clip-path: polygon(0% 0%, 50% 7%, 100% 0%, 100% 100%, 0% 100%);
+          @media only screen and (max-width: ${theme.breakpoints.tabS}) {
+            clip-path: polygon(0% 0%, 50% 4%, 100% 0%, 100% 100%, 0% 100%);
+          }
         `}
       >
         <Box display="flex" pt="20rem" center pl="20rem" pr="15rem">
