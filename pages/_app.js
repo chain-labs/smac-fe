@@ -36,7 +36,8 @@ const MyApp = ({ Component, pageProps }) => {
 	return (
 		<>
 			<Head>
-				<title>ChainLabs</title>
+				<title>SMAC | Space Man Astro Club</title>
+				<link href="https://api.fontshare.com/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet" />
 				<link rel="shortcut icon" href="/static/images/logo.png" />
 			</Head>
 			<ThemeProvider theme={theme}>

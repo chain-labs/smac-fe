@@ -32,12 +32,11 @@ interface IBreakpoints {
 declare module 'styled-components' {
 	export interface DefaultTheme {
 		colors: {
-			'purple-black': string;
-			'secondary-black': string;
-			'primary-green': string;
-			'accent-green': string;
-			'primary-white': string;
-			'primary-red': string;
+			'black-10': string,
+			'black-20': string,
+			'white-10': string,
+			'red-10': string,
+
 		};
 		space: string[] & Partial<ISpace>;
 		breakpoints: string[] & Partial<IBreakpoints>;
