@@ -98,9 +98,8 @@ const HomeComp = () => {
           py="2rem"
           borderRadius="4px"
           cursor="pointer"
-          fontWeight="bold"
         >
-          <Text fontSize="2rem" color="black-20">
+          <Text fontSize="2rem" color="black-20" fontWeight="extra-bold">
             Let's Begin
           </Text>
         </Box>

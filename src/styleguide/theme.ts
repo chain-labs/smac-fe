@@ -62,7 +62,7 @@ const colors: DefaultTheme["colors"] = {
   "red-10": "#ff2e3d",
   "white-10": "#ffffff",
   "yellow-10": "#fffb38",
-  'blue-10': "#1d264b",
+  'blue-10': "#0a1a36",
 };
 
 const theme: DefaultTheme = {
