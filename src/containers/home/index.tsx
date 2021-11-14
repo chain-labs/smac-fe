@@ -40,7 +40,8 @@ const HomeComp = () => {
           height="9"
           width="16"
           layout="responsive"
-          quality="10%"
+          quality="1"
+          priority
         ></Image>
         <Box
           bg="black-10"
