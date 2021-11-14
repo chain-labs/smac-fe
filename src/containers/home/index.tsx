@@ -8,9 +8,9 @@ import { introAnimation, scrollBannerAnimation } from "./animations";
 
 const HomeComp = () => {
   useEffect(() => {
-    window.onload = () => {
+    document.querySelector(".banner").addEventListener("load", () => {
       introAnimation();
-    };
+    });
     scrollBannerAnimation();
   }, []);
 
@@ -40,8 +40,9 @@ const HomeComp = () => {
           height="9"
           width="16"
           layout="responsive"
-          quality="1"
+          quality={1}
           priority
+          onLoadingComplete={introAnimation}
         ></Image>
         <Box
           bg="black-10"
@@ -62,13 +63,13 @@ const HomeComp = () => {
         center
       >
         <Box row>
-          <Text fontSize="2rem" color="white-10" mr="2rem">
+          <Text fontSize="2rem" color="white-10" mr="4rem">
             About
           </Text>
-          <Text fontSize="2rem" color="white-10" mr="2rem">
+          <Text fontSize="2rem" color="white-10" mr="4rem">
             Gallery
           </Text>
-          <Text fontSize="2rem" color="white-10" mr="2rem">
+          <Text fontSize="2rem" color="white-10" mr="4rem">
             Roadmap
           </Text>
         </Box>
@@ -81,11 +82,11 @@ const HomeComp = () => {
         >
           <Image src="/static/images/logo.jpeg" layout="fill" />
         </Box>
-        <Box row ml="2rem">
-          <Text fontSize="2rem" color="white-10" mr="2rem">
+        <Box row ml="4rem">
+          <Text fontSize="2rem" color="white-10" mr="4rem">
             About
           </Text>
-          <Text fontSize="2rem" color="white-10" mr="2rem">
+          <Text fontSize="2rem" color="white-10" mr="4rem">
             Gallery
           </Text>
           <Text fontSize="2rem" color="white-10">
@@ -108,7 +109,7 @@ const HomeComp = () => {
           color="white"
           fontSize={{ mobS: "3.6rem", tabS: "7.2rem" }}
           fontWeight="extra-bold"
-          mb="4rem"
+          mb="20rem"
           textTransform="uppercase"
           textAlign="center"
         >
@@ -178,10 +179,10 @@ const HomeComp = () => {
           </Box>
           <Box ml="8rem">
             <Image
-              src="/static/images/meka_08.jpeg"
+              src="/static/images/spaceman-1.png"
               height="490"
               width="490"
-              // layout="responsive"
+              quality="75"
             />
           </Box>
         </Box>
@@ -190,28 +191,43 @@ const HomeComp = () => {
 
         <Box display="flex" pt="20rem" center pl="20rem" pr="15rem">
           <Box mt="2rem">
-            <Text fontSize="4.8rem" color="red-10" mb="0">
-              8,888 unique Mekas
+            <Text
+              fontSize="4.8rem"
+              color="yellow-10"
+              mb="0"
+              fontWeight="extra-bold"
+            >
+              10,000 <br />
+              Generative Characters
             </Text>
-            <Text fontSize="4.8rem" color="white-10" mt="0" mb="4.8rem">
-              who need Drivers.
+            <Text
+              fontSize="4.8rem"
+              color="white-10"
+              mt="0"
+              mb="4.8rem"
+              fontWeight="extra-bold"
+            >
+              ready to tell a story.
             </Text>
-            <Text fontSize="2rem" color="white-10" mb="4.8rem" maxWidth="50rem">
-              The MekaVerse is a collection of 8,888 generative Mekas with
-              hundreds of elements inspired by the Japan Mecha universes.
-            </Text>
-            <Text fontSize="2rem" color="white-10" maxWidth="50rem">
-              Each artwork is original, with its own color palette and creation.
-              The objective was to make each Meka unique in order to prioritize
-              quality above quantity.
+            <Text
+              fontSize="2rem"
+              color="grey"
+              mb="4.8rem"
+              maxWidth="50rem"
+              fontWeight="thin"
+            >
+              SMAC is a collection of 10,000 Generative pieces of art with
+              references from an upcoming comic book. The collection focuses on
+              characters and their stylised appearance as well as their part in
+              the story arc based on the SMAC comic book.
             </Text>
           </Box>
           <Box ml="8rem">
             <Image
-              src="/static/images/meka_08.jpeg"
+              src="/static/images/spaceman-4.png"
               height="490"
               width="490"
-              // layout="responsive"
+              quality="75"
             />
           </Box>
         </Box>
