@@ -1,61 +1,10 @@
 import Box from "src/components/Box";
 import Image from "next/image";
 import Text from "src/components/Text";
-import { gsap, Power3 } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect } from "react";
 import theme from "src/styleguide/theme";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const scrollBannerAnimation = function () {
-  gsap.fromTo(
-    ".banner",
-    {
-      scale: 1,
-      y: 0,
-    },
-    {
-      scale: 1.5,
-      y: -10,
-      scrollTrigger: {
-        trigger: ".body",
-        // markers: true,
-        scrub: true,
-      },
-    }
-  );
-
-  gsap.to(".body", {
-    clipPath: "polygon(0% 0%, 50% -4%, 100% 0%, 100% 100%, 0% 100%)",
-    scrollTrigger: {
-      trigger: ".body",
-      scrub: true,
-    },
-  });
-};
-
-const introAnimation = () => {
-  gsap.fromTo(
-    ".overlay",
-    {
-      yPercent: 0,
-      clipPath: "polygon(0% 0%, 50% -4%, 100% 0%, 100% 100%, 0% 100%)",
-    },
-    {
-      clipPath: "polygon(0% 0%, 50% 7%, 100% 0%, 100% 100%, 0% 100%)",
-      yPercent: 100,
-      duration: 1.3,
-      ease: Power3.easeIn,
-      onComplete: () => {
-        // @ts-ignore
-        document.querySelector(".overlay").style.display = "none";
-      },
-    }
-  );
-
-  gsap.from("#headline", { autoAlpha: 0, y: -10, duration: 0.5, delay: 0.5 });
-};
+import { introAnimation, scrollBannerAnimation } from "./animations";
 
 const HomeComp = () => {
   useEffect(() => {
@@ -64,8 +13,10 @@ const HomeComp = () => {
     };
     scrollBannerAnimation();
   }, []);
+
   return (
     <Box>
+      {/* <-------------BANNER BACKGROUND----------------> */}
       <Box
         height="100vh"
         width="100vw"
@@ -89,6 +40,7 @@ const HomeComp = () => {
           height="9"
           width="16"
           layout="responsive"
+          quality="10%"
         ></Image>
         <Box
           bg="black-10"
@@ -99,6 +51,46 @@ const HomeComp = () => {
           top="0"
           left="0"
         ></Box>
+      </Box>
+      <Box
+        position="absolute"
+        top="10"
+        left="50%"
+        transform="translateX(-50%)"
+        row
+        center
+      >
+        <Box row>
+          <Text fontSize="2rem" color="white-10" mr="2rem">
+            About
+          </Text>
+          <Text fontSize="2rem" color="white-10" mr="2rem">
+            Gallery
+          </Text>
+          <Text fontSize="2rem" color="white-10" mr="2rem">
+            Roadmap
+          </Text>
+        </Box>
+        <Box
+          borderRadius="50%"
+          height="8rem"
+          width="8rem"
+          position="relative"
+          overflow="hidden"
+        >
+          <Image src="/static/images/logo.jpeg" layout="fill" />
+        </Box>
+        <Box row ml="2rem">
+          <Text fontSize="2rem" color="white-10" mr="2rem">
+            About
+          </Text>
+          <Text fontSize="2rem" color="white-10" mr="2rem">
+            Gallery
+          </Text>
+          <Text fontSize="2rem" color="white-10">
+            Roadmap
+          </Text>
+        </Box>
       </Box>
       <Box
         position="absolute"
@@ -128,14 +120,17 @@ const HomeComp = () => {
           py="2rem"
           borderRadius="4px"
           cursor="pointer"
+          className="cta-btn"
         >
           <Text fontSize="2rem" color="black-20" fontWeight="extra-bold">
             Let's Begin
           </Text>
         </Box>
       </Box>
+      {/* <-------------BANNER BACKGROUND ENDS----------------> */}
+
+      {/* <------------- WEBSITE BODY STARTS HERE ----------------> */}
       <Box
-        // backgroundImage="linear-gradient(to bottom, rgba(0, 0, 0, 0) -10%, rgba(0, 0, 0, 1) 10%);"
         color="white"
         className="body"
         bg="blue-10"
@@ -155,7 +150,8 @@ const HomeComp = () => {
               mb="0"
               fontWeight="extra-bold"
             >
-              8,888 unique Mekas
+              10,000 <br />
+              Generative Characters
             </Text>
             <Text
               fontSize="4.8rem"
@@ -164,7 +160,7 @@ const HomeComp = () => {
               mb="4.8rem"
               fontWeight="extra-bold"
             >
-              who need Drivers.
+              ready to tell a story.
             </Text>
             <Text
               fontSize="2rem"
@@ -173,18 +169,10 @@ const HomeComp = () => {
               maxWidth="50rem"
               fontWeight="thin"
             >
-              The MekaVerse is a collection of 8,888 generative Mekas with
-              hundreds of elements inspired by the Japan Mecha universes.
-            </Text>
-            <Text
-              fontSize="2rem"
-              color="grey"
-              maxWidth="50rem"
-              fontWeight="thin"
-            >
-              Each artwork is original, with its own color palette and creation.
-              The objective was to make each Meka unique in order to prioritize
-              quality above quantity.
+              SMAC is a collection of 10,000 Generative pieces of art with
+              references from an upcoming comic book. The collection focuses on
+              characters and their stylised appearance as well as their part in
+              the story arc based on the SMAC comic book.
             </Text>
           </Box>
           <Box ml="8rem">
@@ -196,6 +184,9 @@ const HomeComp = () => {
             />
           </Box>
         </Box>
+
+        {/* <------------------ REPETITVE CONTENT TO BE DELETED LATER ------------------> */}
+
         <Box display="flex" pt="20rem" center pl="20rem" pr="15rem">
           <Box mt="2rem">
             <Text fontSize="4.8rem" color="red-10" mb="0">
@@ -223,6 +214,8 @@ const HomeComp = () => {
             />
           </Box>
         </Box>
+
+        {/* <------------------ REPETITVE CONTENT TO BE DELETED LATER ENDS ------------------> */}
       </Box>
     </Box>
   );

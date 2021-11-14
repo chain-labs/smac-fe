@@ -38,7 +38,7 @@ const MyApp = ({ Component, pageProps }) => {
 			<Head>
 				<title>SMAC | Space Man Astro Club</title>
 				<link href="https://api.fontshare.com/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet" />
-				<link rel="shortcut icon" href="/static/images/logo.png" />
+				<link rel="shortcut icon" href="/static/images/logo.jpeg" />
 			</Head>
 			<ThemeProvider theme={theme}>
 				<Component {...pageProps} />
