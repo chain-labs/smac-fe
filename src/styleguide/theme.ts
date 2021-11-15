@@ -49,12 +49,10 @@ space.wxl = space[14]; //100px
 space.wxxl = space[15]; //120px
 
 const colors: DefaultTheme['colors'] = {
-	'purple-black': '#0D0619',
-	'secondary-black': '#010404',
-	'primary-green': '#0AD48B',
-	'accent-green': '#04FFA4',
-	'primary-white': '#E6E7E8',
-	'primary-red': '#E91C1C',
+	'primary-black': '#000000',
+	'secondary-black': '#15171d',
+	'primary-white': '#ffffff',
+	'primary-red': '#ff2e3d',
 };
 
 const theme: DefaultTheme = {

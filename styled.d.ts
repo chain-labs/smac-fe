@@ -32,10 +32,8 @@ interface IBreakpoints {
 declare module 'styled-components' {
 	export interface DefaultTheme {
 		colors: {
-			'purple-black': string;
+			'primary-black': string;
 			'secondary-black': string;
-			'primary-green': string;
-			'accent-green': string;
 			'primary-white': string;
 			'primary-red': string;
 		};
