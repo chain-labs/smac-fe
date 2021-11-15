@@ -2,11 +2,11 @@ import { DefaultTheme } from "styled-components";
 
 //Breakpoints
 const breakpoints: DefaultTheme["breakpoints"] = [
-  "319px",
-  "410px",
-  "767px",
-  "1025px",
-  "1199px",
+  "0px",
+  "576px",
+  "768px",
+  "992px",
+  "1200px",
   "1440px",
   "1600px",
 ];
