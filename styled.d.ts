@@ -33,11 +33,11 @@ declare module "styled-components" {
   export interface DefaultTheme {
     colors: {
       "black-10": string;
-      "black-20": string;
-      "white-10": string;
-      "red-10": string;
-      "yellow-10": string;
       "blue-10": string;
+      "blue-20": string;
+      "red-10": string;
+      "red-20": string;
+      "white-10": string;
     };
     space: string[] & Partial<ISpace>;
     breakpoints: string[] & Partial<IBreakpoints>;
