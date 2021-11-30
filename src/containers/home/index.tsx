@@ -1,17 +1,22 @@
 import Box from "src/components/Box";
 import Image from "next/image";
 import Text from "src/components/Text";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import theme from "src/styleguide/theme";
 
 import { introAnimation, scrollBannerAnimation } from "./animations";
+import CountdownTimer from "src/components/CountdownTimer";
 
 const HomeComp = () => {
+  const deadline = "1638343800";
+  const [timeLeft, setTimeLeft] = useState();
+
   useEffect(() => {
     document.querySelector(".banner").addEventListener("load", () => {
       introAnimation();
     });
     scrollBannerAnimation();
+    // const timer = setInterval(())
   }, []);
 
   return (
@@ -20,7 +25,7 @@ const HomeComp = () => {
       <Box
         height="100vh"
         width="100vw"
-        bg="blue-10"
+        bg="black-10"
         zIndex={10}
         className="overlay"
         position="absolute"
@@ -46,7 +51,7 @@ const HomeComp = () => {
         ></Image>
         <Box
           bg="black-10"
-          opacity="50%"
+          opacity="70%"
           height="120vh"
           width="100vw"
           position="absolute"
@@ -57,41 +62,68 @@ const HomeComp = () => {
       <Box
         position="absolute"
         top="10"
-        left="50%"
-        transform="translateX(-50%)"
-        row
-        center
+        left="0"
+        width="100vw"
+        between
+        overflowY="hidden"
       >
-        <Box row>
-          <Text fontSize="2rem" color="white-10" mr="4rem">
-            About
-          </Text>
-          <Text fontSize="2rem" color="white-10" mr="4rem">
-            Gallery
-          </Text>
-          <Text fontSize="2rem" color="white-10" mr="4rem">
-            Roadmap
-          </Text>
-        </Box>
         <Box
-          borderRadius="50%"
-          height="8rem"
-          width="8rem"
-          position="relative"
-          overflow="hidden"
+          id="navbar"
+          row
+          between
+          px={{ mobS: "1rem", tabS: "14rem", deskM: "21rem" }}
+          width="100vw"
         >
-          <Image src="/static/images/logo.jpeg" layout="fill" />
-        </Box>
-        <Box row ml="4rem">
-          <Text fontSize="2rem" color="white-10" mr="4rem">
-            About
-          </Text>
-          <Text fontSize="2rem" color="white-10" mr="4rem">
-            Gallery
-          </Text>
-          <Text fontSize="2rem" color="white-10">
-            Roadmap
-          </Text>
+          <Box
+            height="7.2rem"
+            width="24.6rem"
+            position="relative"
+            overflow="hidden"
+          >
+            <Image src="/static/images/brand.png" layout="fill" quality="100" />
+          </Box>
+          <Box row>
+            <Text fontSize="2rem" fontWeight="medium" color="white-10" mr="wm">
+              About
+            </Text>
+            <Text fontSize="2rem" fontWeight="medium" color="white-10" mr="wm">
+              Roadmap
+            </Text>
+            <Text fontSize="2rem" fontWeight="medium" color="white-10" mr="wm">
+              Team
+            </Text>
+            <Text fontSize="2rem" fontWeight="medium" color="white-10">
+              Gallery
+            </Text>
+          </Box>
+          <a href="https://discord.gg/duEvPCgR4t" target="_blank">
+            <Box
+              border="2px solid"
+              borderColor="white-10"
+              px="mm"
+              py="mm"
+              borderRadius="8px"
+              row
+              cursor="pointer"
+              position="relative"
+              overflow="hidden"
+              color="white-10"
+            >
+              <Text
+                fontSize="2rem"
+                fontWeight="semi-bold"
+                color="white-10"
+                mr="mm"
+              >
+                Join Discord
+              </Text>
+              <Image
+                src="/static/images/icons/up-right.png"
+                height="24"
+                width="24"
+              />
+            </Box>
+          </a>
         </Box>
       </Box>
       <Box
@@ -106,26 +138,38 @@ const HomeComp = () => {
       >
         <Text
           id="headline"
-          color="white"
-          fontSize={{ mobS: "3.6rem", tabS: "7.2rem" }}
-          fontWeight="extra-bold"
-          mb="20rem"
+          as="h1"
+          color="white-10"
+          mb="8rem"
+          letterSpacing="5px"
           textTransform="uppercase"
           textAlign="center"
         >
           Space Man Astro Club
         </Text>
+        <Box id="timer" column center color="white-10" mb="wm">
+          <Text
+            as="s2"
+            textTransform="uppercase"
+            letterSpacing="0.5rem"
+            mb="mm"
+          >
+            Pre-sale Starts In
+          </Text>
+          <CountdownTimer deadline={deadline} />
+        </Box>
         <Box
-          bg="yellow-10"
+          bg="red-10"
           zIndex={2}
-          px="4.8rem"
-          py="2rem"
-          borderRadius="4px"
+          px="wxs"
+          py="ml"
+          color="white-10"
+          borderRadius="8px"
           cursor="pointer"
           className="cta-btn"
         >
-          <Text fontSize="2rem" color="black-20" fontWeight="extra-bold">
-            Let's Begin
+          <Text fontSize="2.4rem" fontWeight="semi-bold" letterSpacing="0.05em">
+            Connect Wallet
           </Text>
         </Box>
       </Box>
@@ -135,22 +179,33 @@ const HomeComp = () => {
       <Box
         color="white"
         className="body"
-        bg="blue-10"
+        bg="black-10"
         mt={{ mobS: "15rem", deskM: "60rem", deskL: "80rem" }}
         css={`
           clip-path: polygon(0% 0%, 50% 7%, 100% 0%, 100% 100%, 0% 100%);
-          @media only screen and (max-width: ${theme.breakpoints.tabS}) {
-            clip-path: polygon(0% 0%, 50% 4%, 100% 0%, 100% 100%, 0% 100%);
-          }
         `}
+        position="relative"
       >
+        <Box
+          className="body-stroke"
+          bg="red-20"
+          height="6rem"
+          width="100vw"
+          zIndex={100}
+          position="absolute"
+          top="0"
+          left="0"
+          css={`
+            clip-path: polygon(0% 0%, 100% 0%, 100% 10%, 50% 105%, 0% 10%);
+          `}
+        />
         <Box display="flex" pt="20rem" center pl="20rem" pr="15rem">
           <Box mt="2rem">
             <Text
               fontSize="4.8rem"
               color="red-10"
               mb="0"
-              fontWeight="extra-bold"
+              fontWeight="semi-bold"
             >
               10,000 <br />
               Generative Characters
@@ -160,7 +215,7 @@ const HomeComp = () => {
               color="white-10"
               mt="0"
               mb="4.8rem"
-              fontWeight="extra-bold"
+              fontWeight="semi-bold"
             >
               ready to tell a story.
             </Text>
@@ -195,7 +250,7 @@ const HomeComp = () => {
               fontSize="4.8rem"
               color="yellow-10"
               mb="0"
-              fontWeight="extra-bold"
+              fontWeight="semi-bold"
             >
               10,000 <br />
               Generative Characters
@@ -205,7 +260,7 @@ const HomeComp = () => {
               color="white-10"
               mt="0"
               mb="4.8rem"
-              fontWeight="extra-bold"
+              fontWeight="semi-bold"
             >
               ready to tell a story.
             </Text>
