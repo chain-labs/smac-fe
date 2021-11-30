@@ -53,7 +53,7 @@ const CountdownTimer = ({ deadline }: { deadline: string }) => {
 
   return (
     <Box>
-      <Text as="s1" letterSpacing="0.2rem">
+      <Text as="s1" letterSpacing="0.2rem" textShadow="0 0 20px #000000">
         {countdown}
       </Text>
     </Box>

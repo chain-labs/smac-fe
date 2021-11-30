@@ -144,6 +144,7 @@ const HomeComp = () => {
           letterSpacing="5px"
           textTransform="uppercase"
           textAlign="center"
+          textShadow="0 0 20px #000000"
         >
           Space Man Astro Club
         </Text>
@@ -153,6 +154,7 @@ const HomeComp = () => {
             textTransform="uppercase"
             letterSpacing="0.5rem"
             mb="mm"
+            textShadow="0 0 20px #000000"
           >
             Pre-sale Starts In
           </Text>
