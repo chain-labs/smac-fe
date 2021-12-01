@@ -39,7 +39,8 @@ export const scrollBannerAnimation = function () {
     });
   };
   
- export const introAnimation = () => {
+export const introAnimation = () => {
+   console.log("intro animation");
     gsap.fromTo(
       ".overlay",
       {
@@ -74,6 +75,12 @@ export const scrollBannerAnimation = function () {
     "#timer",
     { autoAlpha: 0, y: -20 },
     { autoAlpha: 1, y: 0, duration: 0.3, delay: 1.2, ease: Power0.easeInOut }
+   );
+   
+   gsap.fromTo(
+    "#address",
+    { autoAlpha: 0, y: -20 },
+    { autoAlpha: 1, y: 0, duration: 0.2, delay: 1.4, ease: Power0.easeInOut }
   );
 
    gsap.fromTo(

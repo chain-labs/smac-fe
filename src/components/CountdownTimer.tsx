@@ -1,15 +1,26 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Box from "./Box";
 import Text from "./Text";
 import { differenceInSeconds, isSameDay } from "date-fns";
+import { StatesContext } from "./StatesContext";
+import { ethers } from "ethers";
+import axios from "axios";
+import {
+  CONTRACT_ABI_URL,
+  CONTRACT_POLYGON_ADDRESS,
+} from "src/utils/constants";
 
 const DAY_SECONDS = 86400;
 const HOUR_SECONDS = 3600;
 const MINUTE_SECONDS = 60;
 
 const CountdownTimer = ({ deadline }: { deadline: string }) => {
+  const state = useContext(StatesContext);
   const [counter, setCounter] = useState(0);
   const [countdown, setCountdown] = useState("");
+  
+  
+
   useEffect(() => {
     const now = new Date();
     const target = new Date(parseInt(deadline) * 1000);

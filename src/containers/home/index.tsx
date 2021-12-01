@@ -1,23 +1,78 @@
 import Box from "src/components/Box";
 import Image from "next/image";
 import Text from "src/components/Text";
-import { useEffect, useState } from "react";
-import theme from "src/styleguide/theme";
+import React, { useContext, useEffect, useState } from "react";
 
 import { introAnimation, scrollBannerAnimation } from "./animations";
 import CountdownTimer from "src/components/CountdownTimer";
+import { StatesContext } from "src/components/StatesContext";
+import ConnectWalletButton from "src/components/ConnectWalletButton";
+import If from "src/components/If";
+import axios from "axios";
+import { CONTRACT_ABI_URL, CONTRACT_POLYGON_ADDRESS } from "src/utils/constants";
+import { ethers } from "ethers";
 
-const HomeComp = () => {
+const Banner = React.memo(() => {
+  return (
+    <Box
+      width="100vw"
+      height="100vh"
+      position="fixed"
+      top={{ mobS: 0, tabS: -10 }}
+      zIndex={-1}
+      className="banner"
+      key="banner"
+    >
+      <Image
+        id="banner-image"
+        src="/static/images/banner.webp"
+        alt="banner"
+        height="9"
+        width="16"
+        layout="responsive"
+        quality={10}
+        priority
+        onLoadingComplete={() => introAnimation()}
+      ></Image>
+      <Box
+        bg="black-10"
+        opacity="70%"
+        height="120vh"
+        width="100vw"
+        position="absolute"
+        top="0"
+        left="0"
+      ></Box>
+    </Box>)
+});
+
+
+const HomeComp = React.memo(() => {
+  const state = useContext(StatesContext);
+  let load = true;
   const deadline = "1638423000"; //hardcoded timestamp for presale
-  const [timeLeft, setTimeLeft] = useState();
 
-  useEffect(() => {
-    document.querySelector(".banner").addEventListener("load", () => {
-      introAnimation();
+  
+  const [contract, setContract] = useState<ethers.Contract>();
+  const getContract = async () => {
+    const abi = await axios(CONTRACT_ABI_URL);
+    const contract = await new ethers.Contract(
+      CONTRACT_POLYGON_ADDRESS,
+      JSON.parse(abi.data.result),
+      state.provider
+      );
+      
+      console.log({ contract });
+      
+      setContract(contract);
+  };
+  
+    useEffect(() => {
+      // introAnimation();
+      scrollBannerAnimation();
+      getContract();
+      console.log("state", state);
     });
-    scrollBannerAnimation();
-    // const timer = setInterval(())
-  }, []);
 
   return (
     <Box>
@@ -31,34 +86,7 @@ const HomeComp = () => {
         position="absolute"
         top="0"
       ></Box>
-      <Box
-        width="100vw"
-        height="100vh"
-        position="fixed"
-        top={{ mobS: 0, tabS: -10 }}
-        zIndex={-1}
-        className="banner"
-      >
-        <Image
-          src="/static/images/banner.webp"
-          alt="banner"
-          height="9"
-          width="16"
-          layout="responsive"
-          quality={1}
-          priority
-          onLoadingComplete={introAnimation}
-        ></Image>
-        <Box
-          bg="black-10"
-          opacity="70%"
-          height="120vh"
-          width="100vw"
-          position="absolute"
-          top="0"
-          left="0"
-        ></Box>
-      </Box>
+      <Banner />
       <Box
         position="absolute"
         top="10"
@@ -160,20 +188,49 @@ const HomeComp = () => {
           </Text>
           <CountdownTimer deadline={deadline} />
         </Box>
-        <Box
-          bg="red-10"
-          zIndex={2}
-          px="wxs"
-          py="ml"
-          color="white-10"
-          borderRadius="8px"
-          cursor="pointer"
-          className="cta-btn"
-        >
-          <Text fontSize="2.4rem" fontWeight="semi-bold" letterSpacing="0.05em">
-            Connect Wallet
-          </Text>
-        </Box>
+        <If
+          condition={state.address}
+          then={
+            <React.Fragment>
+              <Box
+                bg="red-10"
+                zIndex={2}
+                px="wxs"
+                py="ml"
+                color="white-10"
+                borderRadius="8px"
+                cursor="pointer"
+                className="cta-btn"
+                as="button"
+                border="none"
+                fontFamily="inherit"
+                boxShadow="0 0 10px #000000"
+              >
+                <Text
+                  fontSize="2.4rem"
+                  fontWeight="semi-bold"
+                  letterSpacing="0.05em"
+                >
+                  Buy Spacemen
+                </Text>
+              </Box>
+              <Box row mt="mxxxl" id="address">
+                <Text
+                  as="s2"
+                  color="white"
+                  mr="ms"
+                  textShadow="0 0 20px #000000"
+                >
+                  Wallet Connected:
+                </Text>
+                <Text as="s2" color="red-20" textShadow="0 0 20px #000000">
+                  {state.address}
+                </Text>
+              </Box>
+            </React.Fragment>
+          }
+          else={<ConnectWalletButton />}
+        />
       </Box>
       {/* <-------------BANNER BACKGROUND ENDS----------------> */}
 
@@ -293,6 +350,6 @@ const HomeComp = () => {
       </Box>
     </Box>
   );
-};
+});
 
 export default HomeComp;
