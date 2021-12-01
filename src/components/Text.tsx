@@ -2,11 +2,11 @@ import React from "react";
 import Box, { BoxProps } from "components/Box";
 
 export const fontSizes = {
-  h1: { mobS: "3.2rem", tabS: "6.4rem", deskM: "6.4rem" },
-  h2: { mobS: "3.2rem", deskM: "4.8rem" },
-  s1: { mobS: "2rem", tabS: "2.4rem", deskM: "3.6rem" },
-  s2: { mobS: "2rem", tabS: "2.4rem", deskM: "2.4rem" },
-  b1: { mobS: "1.6rem", tabS: "2rem", deskM: "2.4rem" },
+  h1: { mobS: "3.2rem", tabS: "4.8rem", deskL: "6.4rem" },
+  h2: { mobS: "3.2rem",tabS: "4rem", deskL: "4.8rem" },
+  s1: { mobS: "2rem", tabS: "2.4rem", deskL: "3.6rem" },
+  s2: { mobS: "2rem", tabS: "2rem", deskL: "2.4rem" },
+  b1: { mobS: "1.6rem", tabS: "2rem", deskL: "2.4rem" },
 };
 
 export const charSpacing = {

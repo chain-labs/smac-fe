@@ -8,7 +8,7 @@ import { introAnimation, scrollBannerAnimation } from "./animations";
 import CountdownTimer from "src/components/CountdownTimer";
 
 const HomeComp = () => {
-  const deadline = "1638343800";
+  const deadline = "1638423000"; //hardcoded timestamp for presale
   const [timeLeft, setTimeLeft] = useState();
 
   useEffect(() => {
