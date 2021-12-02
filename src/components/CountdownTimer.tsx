@@ -9,26 +9,36 @@ import {
   CONTRACT_ABI_URL,
   CONTRACT_POLYGON_ADDRESS,
 } from "src/utils/constants";
+import { statuses } from "src/containers/home";
 
 const DAY_SECONDS = 86400;
 const HOUR_SECONDS = 3600;
 const MINUTE_SECONDS = 60;
 
-const CountdownTimer = ({ deadline }: { deadline: string }) => {
+const CountdownTimer = ({
+  status,
+  setStatus,
+  deadline,
+}: {
+  deadline: string;
+  status: string;
+  setStatus: (string) => void;
+}) => {
   const state = useContext(StatesContext);
   const [counter, setCounter] = useState(0);
   const [countdown, setCountdown] = useState("");
-  
-  
 
   useEffect(() => {
-    const now = new Date();
-    const target = new Date(parseInt(deadline) * 1000);
+    if (deadline) {
+      const now = new Date();
+      const target = new Date(parseInt(deadline) * 1000);
+      console.log({ target });
 
-    const diff = differenceInSeconds(target, now);
+      const diff = differenceInSeconds(target, now);
 
-    setCounter(diff);
-  });
+      setCounter(diff);
+    }
+  }, [deadline]);
 
   useEffect(() => {
     if (counter < DAY_SECONDS) {
@@ -57,6 +67,16 @@ const CountdownTimer = ({ deadline }: { deadline: string }) => {
       setCountdown(countdown);
     }
     const interval = setInterval(() => {
+      if (counter === 1) {
+        if (status === statuses.PRESALE_NEXT) {
+          setStatus(statuses.PRESALE_ACTIVE);
+        } else if (
+          status === statuses.PRESALE_ACTIVE ||
+          status === statuses.SALE_NEXT
+        ) {
+          setStatus(statuses.SALE_ACTIVE);
+        }
+      }
       setCounter(counter - 1);
     }, 1000);
     return () => clearInterval(interval);

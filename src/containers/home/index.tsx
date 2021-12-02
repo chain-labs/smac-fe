@@ -9,8 +9,15 @@ import { StatesContext } from "src/components/StatesContext";
 import ConnectWalletButton from "src/components/ConnectWalletButton";
 import If from "src/components/If";
 import axios from "axios";
-import { CONTRACT_ABI_URL, CONTRACT_POLYGON_ADDRESS } from "src/utils/constants";
+import {
+  CONTRACT_ABI_URL,
+  CONTRACT_POLYGON_ADDRESS,
+} from "src/utils/constants";
 import { ethers } from "ethers";
+import useContract from "src/ethereum/useContract";
+import Modal from "src/components/Modal";
+import theme from "src/styleguide/theme";
+import BuyModal from "./components/BuyModal";
 
 const Banner = React.memo(() => {
   return (
@@ -32,7 +39,10 @@ const Banner = React.memo(() => {
         layout="responsive"
         quality={10}
         priority
-        onLoadingComplete={() => introAnimation()}
+        onLoadingComplete={() => {
+          scrollBannerAnimation();
+          introAnimation();
+        }}
       ></Image>
       <Box
         bg="black-10"
@@ -43,39 +53,100 @@ const Banner = React.memo(() => {
         top="0"
         left="0"
       ></Box>
-    </Box>)
+    </Box>
+  );
 });
 
+export const statuses = {
+  PRESALE_NEXT: "PRESALE_NEXT",
+  PRESALE_ACTIVE: "PRESALE_ACTIVE",
+  SALE_NEXT: "SALE_NEXT",
+  SALE_ACTIVE: "SALE_ACTIVE",
+  SOLDOUT: "SOLDOUT",
+};
 
 const HomeComp = React.memo(() => {
   const state = useContext(StatesContext);
-  let load = true;
-  const deadline = "1638423000"; //hardcoded timestamp for presale
+  const [projectDetails, setProjectDetails] = useState({
+    presaleTime: "",
+    saleTime: "",
+    presalePrice: null,
+    publicSalePrice: null,
+    isPresaleActive: false,
+    isSaleActive: false,
+  });
+  const [displayModal, setDisplayModal] = useState(false);
 
-  
-  const [contract, setContract] = useState<ethers.Contract>();
+  const [abi, setAbi] = useState();
+
+  const SMAC = useContract(CONTRACT_POLYGON_ADDRESS, abi, state.provider);
+
+  const [status, setStatus] = useState(statuses.PRESALE_NEXT);
+
+  // const SMAC = useContract(
+  //   CONTRACT_POLYGON_ADDRESS,
+  //   CONTRACT_ABI_URL,
+  //   state.provider
+  // );
+
   const getContract = async () => {
     const abi = await axios(CONTRACT_ABI_URL);
-    const contract = await new ethers.Contract(
-      CONTRACT_POLYGON_ADDRESS,
-      JSON.parse(abi.data.result),
-      state.provider
-      );
-      
-      console.log({ contract });
-      
-      setContract(contract);
+    console.log(abi);
+
+    setAbi(JSON.parse(abi.data.result));
   };
-  
-    useEffect(() => {
-      // introAnimation();
-      scrollBannerAnimation();
-      getContract();
-      console.log("state", state);
-    });
+
+  useEffect(() => {
+    getContract();
+  }, []);
+
+  useEffect(() => {
+    console.log({ SMAC });
+
+    const getDetails = async () => {
+      try {
+        const presaleTime = await SMAC?.callStatic?.presaleStartTime();
+        const saleTime = await SMAC?.callStatic?.publicSaleStartTime();
+        const presalePrice = await SMAC?.callStatic?.presalePrice();
+        const publicSalePrice = await SMAC?.callStatic?.price();
+        const isPresaleActive = await SMAC?.callStatic?.isPresaleActive();
+        const isSaleActive = await SMAC?.callStatic?.isSaleActive();
+
+        if (isPresaleActive) {
+          setStatus(statuses.PRESALE_ACTIVE);
+        } else if (isSaleActive) {
+          setStatus(statuses.SALE_ACTIVE);
+        }
+
+        setProjectDetails({
+          presaleTime: presaleTime.toString(),
+          saleTime: saleTime.toString(),
+          presalePrice,
+          publicSalePrice,
+          isPresaleActive,
+          isSaleActive,
+        });
+      } catch (error) {
+        console.log({ error });
+      }
+    };
+    if (SMAC) {
+      getDetails();
+    }
+  }, [SMAC]);
 
   return (
     <Box>
+      <If
+        condition={displayModal}
+        then={
+          <BuyModal
+            presalePrice={projectDetails.presalePrice}
+            salePrice={projectDetails.publicSalePrice}
+            presale={status === statuses.PRESALE_ACTIVE}
+          />
+        }
+      />
       {/* <-------------BANNER BACKGROUND----------------> */}
       <Box
         height="100vh"
@@ -176,18 +247,53 @@ const HomeComp = React.memo(() => {
         >
           Space Man Astro Club
         </Text>
-        <Box id="timer" column center color="white-10" mb="wm">
-          <Text
-            as="s2"
-            textTransform="uppercase"
-            letterSpacing="0.5rem"
-            mb="mm"
-            textShadow="0 0 20px #000000"
-          >
-            Pre-sale Starts In
-          </Text>
-          <CountdownTimer deadline={deadline} />
-        </Box>
+        <If
+          condition={status === statuses.PRESALE_NEXT}
+          then={
+            <Box id="timer" column center color="white-10" mb="wm">
+              <Text
+                as="s2"
+                textTransform="uppercase"
+                letterSpacing="0.5rem"
+                mb="mm"
+                textShadow="0 0 20px #000000"
+              >
+                Pre-sale Starts In
+              </Text>
+              <CountdownTimer
+                status={status}
+                setStatus={setStatus}
+                deadline={projectDetails?.presaleTime}
+              />
+            </Box>
+          }
+          else={
+            <If
+              condition={
+                status === statuses.PRESALE_ACTIVE ||
+                status === statuses.SALE_NEXT
+              }
+              then={
+                <Box id="timer" column center color="white-10" mb="wm">
+                  <Text
+                    as="s2"
+                    textTransform="uppercase"
+                    letterSpacing="0.5rem"
+                    mb="mm"
+                    textShadow="0 0 20px #000000"
+                  >
+                    Sale Starts In
+                  </Text>
+                  <CountdownTimer
+                    status={status}
+                    setStatus={setStatus}
+                    deadline={projectDetails?.saleTime}
+                  />
+                </Box>
+              }
+            />
+          }
+        />
         <If
           condition={state.address}
           then={
@@ -205,6 +311,7 @@ const HomeComp = React.memo(() => {
                 border="none"
                 fontFamily="inherit"
                 boxShadow="0 0 10px #000000"
+                onClick={() => setDisplayModal(true)}
               >
                 <Text
                   fontSize="2.4rem"
@@ -239,7 +346,7 @@ const HomeComp = React.memo(() => {
         color="white"
         className="body"
         bg="black-10"
-        mt={{ mobS: "15rem", deskM: "60rem", deskL: "80rem" }}
+        mt={{ mobS: "15rem", deskM: "62rem", deskL: "80rem" }}
         css={`
           clip-path: polygon(0% 0%, 50% 7%, 100% 0%, 100% 100%, 0% 100%);
         `}

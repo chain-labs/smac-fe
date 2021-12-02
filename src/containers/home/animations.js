@@ -40,7 +40,6 @@ export const scrollBannerAnimation = function () {
   };
   
 export const introAnimation = () => {
-   console.log("intro animation");
     gsap.fromTo(
       ".overlay",
       {
