@@ -1,8 +1,9 @@
+import { statuses } from "src/containers/home";
 import { ETH_REQUEST_ACCOUNT } from "src/ethereum/utils/methods";
 import Box from "./Box";
 import Text from "./Text";
 
-const ConnectWalletButton = () => {
+const ConnectWalletButton = ({ status }: { status: string }) => {
   const requestAccount = async () => {
     if (process.browser) {
       // @ts-ignore
@@ -15,6 +16,7 @@ const ConnectWalletButton = () => {
       bg="red-10"
       zIndex={2}
       px="wxs"
+      mt={status === statuses.SALE_ACTIVE ? "12rem" : "0"}
       py="ml"
       color="white-10"
       borderRadius="8px"

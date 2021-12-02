@@ -18,6 +18,7 @@ import useContract from "src/ethereum/useContract";
 import Modal from "src/components/Modal";
 import theme from "src/styleguide/theme";
 import BuyModal from "./components/BuyModal";
+import Overview from "./components/Overview";
 
 const Banner = React.memo(() => {
   return (
@@ -299,6 +300,9 @@ const HomeComp = React.memo(() => {
           then={
             <React.Fragment>
               <Box
+                as="button"
+                className="cta-btn"
+                mt={status === statuses.SALE_ACTIVE ? "12rem" : "0"}
                 bg="red-10"
                 zIndex={2}
                 px="wxs"
@@ -306,8 +310,6 @@ const HomeComp = React.memo(() => {
                 color="white-10"
                 borderRadius="8px"
                 cursor="pointer"
-                className="cta-btn"
-                as="button"
                 border="none"
                 fontFamily="inherit"
                 boxShadow="0 0 10px #000000"
@@ -336,7 +338,7 @@ const HomeComp = React.memo(() => {
               </Box>
             </React.Fragment>
           }
-          else={<ConnectWalletButton />}
+          else={<ConnectWalletButton status={status} />}
         />
       </Box>
       {/* <-------------BANNER BACKGROUND ENDS----------------> */}
@@ -348,7 +350,7 @@ const HomeComp = React.memo(() => {
         bg="black-10"
         mt={{ mobS: "15rem", deskM: "62rem", deskL: "80rem" }}
         css={`
-          clip-path: polygon(0% 0%, 50% 7%, 100% 0%, 100% 100%, 0% 100%);
+          clip-path: polygon(0% 0%, 50% 4%, 100% 0%, 100% 100%, 0% 100%);
         `}
         position="relative"
       >
@@ -362,97 +364,11 @@ const HomeComp = React.memo(() => {
           top="0"
           left="0"
           css={`
-            clip-path: polygon(0% 0%, 100% 0%, 100% 10%, 50% 105%, 0% 10%);
+            clip-path: polygon(0% 0%, 100% 0%, 100% 10%, 50% 100%, 0% 10%);
           `}
         />
-        <Box display="flex" pt="20rem" center pl="20rem" pr="15rem">
-          <Box mt="2rem">
-            <Text
-              fontSize="4.8rem"
-              color="red-10"
-              mb="0"
-              fontWeight="semi-bold"
-            >
-              10,000 <br />
-              Generative Characters
-            </Text>
-            <Text
-              fontSize="4.8rem"
-              color="white-10"
-              mt="0"
-              mb="4.8rem"
-              fontWeight="semi-bold"
-            >
-              ready to tell a story.
-            </Text>
-            <Text
-              fontSize="2rem"
-              color="grey"
-              mb="4.8rem"
-              maxWidth="50rem"
-              fontWeight="thin"
-            >
-              SMAC is a collection of 10,000 Generative pieces of art with
-              references from an upcoming comic book. The collection focuses on
-              characters and their stylised appearance as well as their part in
-              the story arc based on the SMAC comic book.
-            </Text>
-          </Box>
-          <Box ml="8rem">
-            <Image
-              src="/static/images/spaceman-1.png"
-              height="490"
-              width="490"
-              quality="75"
-            />
-          </Box>
-        </Box>
-
-        {/* <------------------ REPETITVE CONTENT TO BE DELETED LATER ------------------> */}
-
-        <Box display="flex" pt="20rem" center pl="20rem" pr="15rem">
-          <Box mt="2rem">
-            <Text
-              fontSize="4.8rem"
-              color="yellow-10"
-              mb="0"
-              fontWeight="semi-bold"
-            >
-              10,000 <br />
-              Generative Characters
-            </Text>
-            <Text
-              fontSize="4.8rem"
-              color="white-10"
-              mt="0"
-              mb="4.8rem"
-              fontWeight="semi-bold"
-            >
-              ready to tell a story.
-            </Text>
-            <Text
-              fontSize="2rem"
-              color="grey"
-              mb="4.8rem"
-              maxWidth="50rem"
-              fontWeight="thin"
-            >
-              SMAC is a collection of 10,000 Generative pieces of art with
-              references from an upcoming comic book. The collection focuses on
-              characters and their stylised appearance as well as their part in
-              the story arc based on the SMAC comic book.
-            </Text>
-          </Box>
-          <Box ml="8rem">
-            <Image
-              src="/static/images/spaceman-4.png"
-              height="490"
-              width="490"
-              quality="75"
-            />
-          </Box>
-        </Box>
-
+        <Overview />
+        <Overview />
         {/* <------------------ REPETITVE CONTENT TO BE DELETED LATER ENDS ------------------> */}
       </Box>
     </Box>
