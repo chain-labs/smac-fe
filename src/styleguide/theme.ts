@@ -63,6 +63,7 @@ const colors: DefaultTheme["colors"] = {
   "red-10": "#CC0000",
   "red-20": "#FF2E3D",
   "white-10": "#FFFFFF",
+  "main-black": "#000000"
 };
 
 const theme: DefaultTheme = {
