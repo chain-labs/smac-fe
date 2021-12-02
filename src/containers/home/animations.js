@@ -22,15 +22,24 @@ export const scrollBannerAnimation = function () {
     );
   
     gsap.to(".body", {
-      clipPath: "polygon(0% 0%, 50% -4%, 100% 0%, 100% 100%, 0% 100%)",
+      clipPath: "polygon(0% 0%, 50% -1%, 100% 0%, 100% 100%, 0% 100%)",
       scrollTrigger: {
         trigger: ".body",
         scrub: true,
       },
     });
+  
+    gsap.to(".body-stroke", {
+      clipPath: "polygon(0% 0%, 100% 0%, 100% 10%, 50% -10%, 0% 10%)",
+      scrollTrigger: {
+        trigger: ".body",
+        scrub: true,
+        start: "top 90%",
+      },
+    });
   };
   
- export const introAnimation = () => {
+export const introAnimation = () => {
     gsap.fromTo(
       ".overlay",
       {
@@ -55,10 +64,36 @@ export const scrollBannerAnimation = function () {
       { autoAlpha: 1, y: 0, duration: 0.3, delay: 0.9, ease: Power0.easeInOut }
     );
      
-     gsap.fromTo(
-         ".cta-btn",
-         { autoAlpha: 0, y: -20 },
-         { autoAlpha: 1, y: 0, duration: 0.3, delay: 1.1, ease: Power0.easeInOut }
-     )
+   gsap.fromTo(
+     ".cta-btn",
+     { autoAlpha: 0, y: -20 },
+     { autoAlpha: 1, y: 0, duration: 0.3, delay: 1.3, ease: Power0.easeInOut }
+   );
+
+   gsap.fromTo(
+    "#timer",
+    { autoAlpha: 0, y: -20 },
+    { autoAlpha: 1, y: 0, duration: 0.3, delay: 1.2, ease: Power0.easeInOut }
+   );
+   
+   gsap.fromTo(
+    "#address",
+    { autoAlpha: 0, y: -20 },
+    { autoAlpha: 1, y: 0, duration: 0.2, delay: 1.4, ease: Power0.easeInOut }
+  );
+
+   gsap.fromTo(
+     "#navbar",
+     {
+       clipPath: "polygon(0% 0%, 100% 0%, 100% 1%, 0% 1%)",
+      },
+      {
+        //  transform: "translateY(-100%)",
+        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+       duration: 1,
+       delay: 0.9,
+       ease: Power3.easeOut
+     }
+   )
   };
   

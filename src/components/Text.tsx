@@ -2,11 +2,11 @@ import React from "react";
 import Box, { BoxProps } from "components/Box";
 
 export const fontSizes = {
-  h1: { mobS: "3.2rem", tabS: "6.4rem", deskM: "6.4rem" },
-  h2: { mobS: "3.2rem", deskM: "4.8rem" },
-  s1: { mobS: "2rem", tabS: "2.4rem", deskM: "3.6rem" },
-  s2: { mobS: "2rem", tabS: "2.4rem", deskM: "3.6rem" },
-  b1: { mobS: "1.6rem", tabS: "2rem", deskM: "2.4rem" },
+  h1: { mobS: "3.2rem", tabS: "4.8rem", deskL: "6.4rem" },
+  h2: { mobS: "3.2rem",tabS: "4rem", deskL: "4.8rem" },
+  s1: { mobS: "2rem", tabS: "2.4rem", deskL: "3.6rem" },
+  s2: { mobS: "2rem", tabS: "2rem", deskL: "2.4rem" },
+  b1: { mobS: "1.6rem", tabS: "2rem", deskL: "2.4rem" },
 };
 
 export const charSpacing = {
@@ -34,9 +34,8 @@ const fontWeights = {
 };
 
 export interface TextProps extends BoxProps {
-  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "b1" | "b2" | "b3" | "links";
-  fontWeight?: "extra-bold" | "bold" | "medium" | "regular" | "thin";
-  lineHeight?: "h1" | "h2" | "h4" | "b2";
+  as?: "h1" | "h2" | "s1" | "s2" | "b1";
+  fontWeight?: "semi-bold" | "bold" | "medium" | "regular" | "thin";
 
   children?: string | React.ReactNode;
   id?: string;
@@ -47,13 +46,13 @@ export interface TextProps extends BoxProps {
 
 const Text = ({
   as = "b1",
-  fontWeight = "regular",
+  fontWeight,
   color,
   children,
   ...restProps
 }: TextProps): JSX.Element => {
   const fs = fontSizes[as];
-  const fw = as ? fontW[as] : fontWeights[fontWeight];
+  const fw = fontWeight ? fontWeights[fontWeight] : fontW[as];
   const cs = charSpacing[as] ?? "150%";
 
   return (

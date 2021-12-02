@@ -1,97 +1,229 @@
 import Box from "src/components/Box";
 import Image from "next/image";
 import Text from "src/components/Text";
-import { useEffect } from "react";
-import theme from "src/styleguide/theme";
+import React, { useContext, useEffect, useState } from "react";
 
 import { introAnimation, scrollBannerAnimation } from "./animations";
+import CountdownTimer from "src/components/CountdownTimer";
+import { StatesContext } from "src/components/StatesContext";
+import ConnectWalletButton from "src/components/ConnectWalletButton";
+import If from "src/components/If";
+import axios from "axios";
+import {
+  CONTRACT_ABI_URL,
+  CONTRACT_POLYGON_ADDRESS,
+} from "src/utils/constants";
+import { ethers } from "ethers";
+import useContract from "src/ethereum/useContract";
+import Modal from "src/components/Modal";
+import theme from "src/styleguide/theme";
+import BuyModal from "./components/BuyModal";
+import Overview from "./components/Overview";
 
-const HomeComp = () => {
+const Banner = React.memo(() => {
+  return (
+    <Box
+      width="100vw"
+      height="100vh"
+      position="fixed"
+      top={{ mobS: 0, tabS: -10 }}
+      zIndex={-1}
+      className="banner"
+      key="banner"
+    >
+      <Image
+        id="banner-image"
+        src="/static/images/banner.webp"
+        alt="banner"
+        height="9"
+        width="16"
+        layout="responsive"
+        quality={10}
+        priority
+        onLoadingComplete={() => {
+          scrollBannerAnimation();
+          introAnimation();
+        }}
+      ></Image>
+      <Box
+        bg="black-10"
+        opacity="70%"
+        height="120vh"
+        width="100vw"
+        position="absolute"
+        top="0"
+        left="0"
+      ></Box>
+    </Box>
+  );
+});
+
+export const statuses = {
+  PRESALE_NEXT: "PRESALE_NEXT",
+  PRESALE_ACTIVE: "PRESALE_ACTIVE",
+  SALE_NEXT: "SALE_NEXT",
+  SALE_ACTIVE: "SALE_ACTIVE",
+  SOLDOUT: "SOLDOUT",
+};
+
+const HomeComp = React.memo(() => {
+  const state = useContext(StatesContext);
+  const [projectDetails, setProjectDetails] = useState({
+    presaleTime: "",
+    saleTime: "",
+    presalePrice: null,
+    publicSalePrice: null,
+    isPresaleActive: false,
+    isSaleActive: false,
+  });
+  const [displayModal, setDisplayModal] = useState(false);
+
+  const [abi, setAbi] = useState();
+
+  const SMAC = useContract(CONTRACT_POLYGON_ADDRESS, abi, state.provider);
+
+  const [status, setStatus] = useState(statuses.PRESALE_NEXT);
+
+  // const SMAC = useContract(
+  //   CONTRACT_POLYGON_ADDRESS,
+  //   CONTRACT_ABI_URL,
+  //   state.provider
+  // );
+
+  const getContract = async () => {
+    const abi = await axios(CONTRACT_ABI_URL);
+    console.log(abi);
+
+    setAbi(JSON.parse(abi.data.result));
+  };
+
   useEffect(() => {
-    document.querySelector(".banner").addEventListener("load", () => {
-      introAnimation();
-    });
-    scrollBannerAnimation();
+    getContract();
   }, []);
+
+  useEffect(() => {
+    console.log({ SMAC });
+
+    const getDetails = async () => {
+      try {
+        const presaleTime = await SMAC?.callStatic?.presaleStartTime();
+        const saleTime = await SMAC?.callStatic?.publicSaleStartTime();
+        const presalePrice = await SMAC?.callStatic?.presalePrice();
+        const publicSalePrice = await SMAC?.callStatic?.price();
+        const isPresaleActive = await SMAC?.callStatic?.isPresaleActive();
+        const isSaleActive = await SMAC?.callStatic?.isSaleActive();
+
+        if (isPresaleActive) {
+          setStatus(statuses.PRESALE_ACTIVE);
+        } else if (isSaleActive) {
+          setStatus(statuses.SALE_ACTIVE);
+        }
+
+        setProjectDetails({
+          presaleTime: presaleTime.toString(),
+          saleTime: saleTime.toString(),
+          presalePrice,
+          publicSalePrice,
+          isPresaleActive,
+          isSaleActive,
+        });
+      } catch (error) {
+        console.log({ error });
+      }
+    };
+    if (SMAC) {
+      getDetails();
+    }
+  }, [SMAC]);
 
   return (
     <Box>
+      <If
+        condition={displayModal}
+        then={
+          <BuyModal
+            presalePrice={projectDetails.presalePrice}
+            salePrice={projectDetails.publicSalePrice}
+            presale={status === statuses.PRESALE_ACTIVE}
+          />
+        }
+      />
       {/* <-------------BANNER BACKGROUND----------------> */}
       <Box
         height="100vh"
         width="100vw"
-        bg="blue-10"
+        bg="black-10"
         zIndex={10}
         className="overlay"
         position="absolute"
         top="0"
       ></Box>
-      <Box
-        width="100vw"
-        height="100vh"
-        position="fixed"
-        top={{ mobS: 0, tabS: -10 }}
-        zIndex={-1}
-        className="banner"
-      >
-        <Image
-          src="/static/images/banner.webp"
-          alt="banner"
-          height="9"
-          width="16"
-          layout="responsive"
-          quality={1}
-          priority
-          onLoadingComplete={introAnimation}
-        ></Image>
-        <Box
-          bg="black-10"
-          opacity="50%"
-          height="120vh"
-          width="100vw"
-          position="absolute"
-          top="0"
-          left="0"
-        ></Box>
-      </Box>
+      <Banner />
       <Box
         position="absolute"
         top="10"
-        left="50%"
-        transform="translateX(-50%)"
-        row
-        center
+        left="0"
+        width="100vw"
+        between
+        overflowY="hidden"
       >
-        <Box row>
-          <Text fontSize="2rem" color="white-10" mr="4rem">
-            About
-          </Text>
-          <Text fontSize="2rem" color="white-10" mr="4rem">
-            Gallery
-          </Text>
-          <Text fontSize="2rem" color="white-10" mr="4rem">
-            Roadmap
-          </Text>
-        </Box>
         <Box
-          borderRadius="50%"
-          height="8rem"
-          width="8rem"
-          position="relative"
-          overflow="hidden"
+          id="navbar"
+          row
+          between
+          px={{ mobS: "1rem", tabS: "14rem", deskM: "21rem" }}
+          width="100vw"
         >
-          <Image src="/static/images/logo.jpeg" layout="fill" />
-        </Box>
-        <Box row ml="4rem">
-          <Text fontSize="2rem" color="white-10" mr="4rem">
-            About
-          </Text>
-          <Text fontSize="2rem" color="white-10" mr="4rem">
-            Gallery
-          </Text>
-          <Text fontSize="2rem" color="white-10">
-            Roadmap
-          </Text>
+          <Box
+            height="7.2rem"
+            width="24.6rem"
+            position="relative"
+            overflow="hidden"
+          >
+            <Image src="/static/images/brand.png" layout="fill" quality="100" />
+          </Box>
+          <Box row>
+            <Text fontSize="2rem" fontWeight="medium" color="white-10" mr="wm">
+              About
+            </Text>
+            <Text fontSize="2rem" fontWeight="medium" color="white-10" mr="wm">
+              Roadmap
+            </Text>
+            <Text fontSize="2rem" fontWeight="medium" color="white-10" mr="wm">
+              Team
+            </Text>
+            <Text fontSize="2rem" fontWeight="medium" color="white-10">
+              Gallery
+            </Text>
+          </Box>
+          <a href="https://discord.gg/duEvPCgR4t" target="_blank">
+            <Box
+              border="2px solid"
+              borderColor="white-10"
+              px="mm"
+              py="mm"
+              borderRadius="8px"
+              row
+              cursor="pointer"
+              position="relative"
+              overflow="hidden"
+              color="white-10"
+            >
+              <Text
+                fontSize="2rem"
+                fontWeight="semi-bold"
+                color="white-10"
+                mr="mm"
+              >
+                Join Discord
+              </Text>
+              <Image
+                src="/static/images/icons/up-right.png"
+                height="24"
+                width="24"
+              />
+            </Box>
+          </a>
         </Box>
       </Box>
       <Box
@@ -106,28 +238,108 @@ const HomeComp = () => {
       >
         <Text
           id="headline"
-          color="white"
-          fontSize={{ mobS: "3.6rem", tabS: "7.2rem" }}
-          fontWeight="extra-bold"
-          mb="20rem"
+          as="h1"
+          color="white-10"
+          mb="8rem"
+          letterSpacing="5px"
           textTransform="uppercase"
           textAlign="center"
+          textShadow="0 0 20px #000000"
         >
           Space Man Astro Club
         </Text>
-        <Box
-          bg="yellow-10"
-          zIndex={2}
-          px="4.8rem"
-          py="2rem"
-          borderRadius="4px"
-          cursor="pointer"
-          className="cta-btn"
-        >
-          <Text fontSize="2rem" color="black-20" fontWeight="extra-bold">
-            Let's Begin
-          </Text>
-        </Box>
+        <If
+          condition={status === statuses.PRESALE_NEXT}
+          then={
+            <Box id="timer" column center color="white-10" mb="wm">
+              <Text
+                as="s2"
+                textTransform="uppercase"
+                letterSpacing="0.5rem"
+                mb="mm"
+                textShadow="0 0 20px #000000"
+              >
+                Pre-sale Starts In
+              </Text>
+              <CountdownTimer
+                status={status}
+                setStatus={setStatus}
+                deadline={projectDetails?.presaleTime}
+              />
+            </Box>
+          }
+          else={
+            <If
+              condition={
+                status === statuses.PRESALE_ACTIVE ||
+                status === statuses.SALE_NEXT
+              }
+              then={
+                <Box id="timer" column center color="white-10" mb="wm">
+                  <Text
+                    as="s2"
+                    textTransform="uppercase"
+                    letterSpacing="0.5rem"
+                    mb="mm"
+                    textShadow="0 0 20px #000000"
+                  >
+                    Sale Starts In
+                  </Text>
+                  <CountdownTimer
+                    status={status}
+                    setStatus={setStatus}
+                    deadline={projectDetails?.saleTime}
+                  />
+                </Box>
+              }
+            />
+          }
+        />
+        <If
+          condition={state.address}
+          then={
+            <React.Fragment>
+              <Box
+                as="button"
+                className="cta-btn"
+                mt={status === statuses.SALE_ACTIVE ? "12rem" : "0"}
+                bg="red-10"
+                zIndex={2}
+                px="wxs"
+                py="ml"
+                color="white-10"
+                borderRadius="8px"
+                cursor="pointer"
+                border="none"
+                fontFamily="inherit"
+                boxShadow="0 0 10px #000000"
+                onClick={() => setDisplayModal(true)}
+              >
+                <Text
+                  fontSize="2.4rem"
+                  fontWeight="semi-bold"
+                  letterSpacing="0.05em"
+                >
+                  Buy Spacemen
+                </Text>
+              </Box>
+              <Box row mt="mxxxl" id="address">
+                <Text
+                  as="s2"
+                  color="white"
+                  mr="ms"
+                  textShadow="0 0 20px #000000"
+                >
+                  Wallet Connected:
+                </Text>
+                <Text as="s2" color="red-20" textShadow="0 0 20px #000000">
+                  {state.address}
+                </Text>
+              </Box>
+            </React.Fragment>
+          }
+          else={<ConnectWalletButton status={status} />}
+        />
       </Box>
       {/* <-------------BANNER BACKGROUND ENDS----------------> */}
 
@@ -135,107 +347,32 @@ const HomeComp = () => {
       <Box
         color="white"
         className="body"
-        bg="blue-10"
-        mt={{ mobS: "15rem", deskM: "60rem", deskL: "80rem" }}
+        bg="black-10"
+        mt={{ mobS: "15rem", deskM: "62rem", deskL: "80rem" }}
         css={`
-          clip-path: polygon(0% 0%, 50% 7%, 100% 0%, 100% 100%, 0% 100%);
-          @media only screen and (max-width: ${theme.breakpoints.tabS}) {
-            clip-path: polygon(0% 0%, 50% 4%, 100% 0%, 100% 100%, 0% 100%);
-          }
+          clip-path: polygon(0% 0%, 50% 4%, 100% 0%, 100% 100%, 0% 100%);
         `}
+        position="relative"
       >
-        <Box display="flex" pt="20rem" center pl="20rem" pr="15rem">
-          <Box mt="2rem">
-            <Text
-              fontSize="4.8rem"
-              color="red-10"
-              mb="0"
-              fontWeight="extra-bold"
-            >
-              10,000 <br />
-              Generative Characters
-            </Text>
-            <Text
-              fontSize="4.8rem"
-              color="white-10"
-              mt="0"
-              mb="4.8rem"
-              fontWeight="extra-bold"
-            >
-              ready to tell a story.
-            </Text>
-            <Text
-              fontSize="2rem"
-              color="grey"
-              mb="4.8rem"
-              maxWidth="50rem"
-              fontWeight="thin"
-            >
-              SMAC is a collection of 10,000 Generative pieces of art with
-              references from an upcoming comic book. The collection focuses on
-              characters and their stylised appearance as well as their part in
-              the story arc based on the SMAC comic book.
-            </Text>
-          </Box>
-          <Box ml="8rem">
-            <Image
-              src="/static/images/spaceman-1.png"
-              height="490"
-              width="490"
-              quality="75"
-            />
-          </Box>
-        </Box>
-
-        {/* <------------------ REPETITVE CONTENT TO BE DELETED LATER ------------------> */}
-
-        <Box display="flex" pt="20rem" center pl="20rem" pr="15rem">
-          <Box mt="2rem">
-            <Text
-              fontSize="4.8rem"
-              color="yellow-10"
-              mb="0"
-              fontWeight="extra-bold"
-            >
-              10,000 <br />
-              Generative Characters
-            </Text>
-            <Text
-              fontSize="4.8rem"
-              color="white-10"
-              mt="0"
-              mb="4.8rem"
-              fontWeight="extra-bold"
-            >
-              ready to tell a story.
-            </Text>
-            <Text
-              fontSize="2rem"
-              color="grey"
-              mb="4.8rem"
-              maxWidth="50rem"
-              fontWeight="thin"
-            >
-              SMAC is a collection of 10,000 Generative pieces of art with
-              references from an upcoming comic book. The collection focuses on
-              characters and their stylised appearance as well as their part in
-              the story arc based on the SMAC comic book.
-            </Text>
-          </Box>
-          <Box ml="8rem">
-            <Image
-              src="/static/images/spaceman-4.png"
-              height="490"
-              width="490"
-              quality="75"
-            />
-          </Box>
-        </Box>
-
+        <Box
+          className="body-stroke"
+          bg="red-20"
+          height="6rem"
+          width="100vw"
+          zIndex={100}
+          position="absolute"
+          top="0"
+          left="0"
+          css={`
+            clip-path: polygon(0% 0%, 100% 0%, 100% 10%, 50% 100%, 0% 10%);
+          `}
+        />
+        <Overview />
+        <Overview />
         {/* <------------------ REPETITVE CONTENT TO BE DELETED LATER ENDS ------------------> */}
       </Box>
     </Box>
   );
-};
+});
 
 export default HomeComp;

@@ -6,6 +6,7 @@ import theme from 'styleguide/theme';
 
 import 'styleguide/globalStyles.css';
 import { ThemeProvider } from 'styled-components';
+import { StatesProvider } from 'components/StatesContext';
 
 const MyApp = ({ Component, pageProps }) => {
 	useEffect(() => {
@@ -40,9 +41,11 @@ const MyApp = ({ Component, pageProps }) => {
 				<link href="https://api.fontshare.com/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet" />
 				<link rel="shortcut icon" href="/static/images/logo.jpeg" />
 			</Head>
-			<ThemeProvider theme={theme}>
-				<Component {...pageProps} />
-			</ThemeProvider>
+			<StatesProvider>
+				<ThemeProvider	theme={theme}>
+					<Component {...pageProps} />
+				</ThemeProvider>
+			</StatesProvider>
 		</>
 	);
 };

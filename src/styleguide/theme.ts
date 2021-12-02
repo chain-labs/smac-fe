@@ -61,7 +61,7 @@ const colors: DefaultTheme["colors"] = {
   "blue-10": "#040641",
   "blue-20": "#030641",
   "red-10": "#CC0000",
-  "red-20": "FF2E3D",
+  "red-20": "#FF2E3D",
   "white-10": "#FFFFFF",
 };
 
