@@ -130,7 +130,7 @@ const HomeComp = React.memo(() => {
         width="100vw"
         between
         overflowY="hidden"
-      >
+       >
         <Box
           id="navbar"
           row
