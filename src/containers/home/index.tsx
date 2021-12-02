@@ -19,6 +19,7 @@ import Modal from "src/components/Modal";
 import theme from "src/styleguide/theme";
 import BuyModal from "./components/BuyModal";
 import Overview from "./components/Overview";
+import GallerySlide from "./components/GallerySlide";
 
 const Banner = React.memo(() => {
   return (
@@ -368,6 +369,7 @@ const HomeComp = React.memo(() => {
           `}
         />
         <Overview />
+        <GallerySlide />
         <Overview />
         {/* <------------------ REPETITVE CONTENT TO BE DELETED LATER ENDS ------------------> */}
       </Box>
