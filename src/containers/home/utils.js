@@ -30,3 +30,9 @@ export const TEAM_MEMBERS = [
         imageUrl: "/static/images/spaceman-4.jpeg",
     }
 ]
+
+export const TWITTER_HANDLE = "https://twitter.com/SMAC_NFT";
+
+export const INSTAGRAM_HANDLE = "https://www.instagram.com/spacemanastroclub/";
+
+export const DISCORD_INVITE = "https://discord.gg/duEvPCgR4t";

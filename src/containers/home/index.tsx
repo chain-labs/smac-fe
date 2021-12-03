@@ -13,7 +13,7 @@ import {
   CONTRACT_POLYGON_ADDRESS,
 } from "src/utils/constants";
 
-import { ROADMAP, POST_SALE_ROADMAP } from "./utils";
+import { ROADMAP, POST_SALE_ROADMAP, DISCORD_INVITE } from "./utils";
 import useContract from "src/ethereum/useContract";
 import BuyModal from "./components/BuyModal";
 import Overview from "./components/Overview";
@@ -21,6 +21,7 @@ import GallerySlide from "./components/GallerySlide";
 import Roadmap from "./components/Roadmap";
 import Banner from "./components/Banner";
 import TeamSection from "./components/TeamSection";
+import SocialMedia from "./components/SocialMedia";
 
 export const statuses = {
   PRESALE_NEXT: "PRESALE_NEXT",
@@ -154,7 +155,7 @@ const HomeComp = React.memo(() => {
               Gallery
             </Text>
           </Box>
-          <a href="https://discord.gg/duEvPCgR4t" target="_blank">
+          <Box as="a" href={DISCORD_INVITE} target="_blank">
             <Box
               border="2px solid"
               borderColor="white-10"
@@ -181,7 +182,7 @@ const HomeComp = React.memo(() => {
                 width="24"
               />
             </Box>
-          </a>
+          </Box>
         </Box>
       </Box>
       <Box
@@ -331,6 +332,7 @@ const HomeComp = React.memo(() => {
         <Box mb="16rem" />
         <Roadmap title="Post-Sale Roadmap" roadmap={POST_SALE_ROADMAP} />
         <TeamSection />
+        <SocialMedia />
       </Box>
     </Box>
   );

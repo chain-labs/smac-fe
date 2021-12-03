@@ -58,7 +58,7 @@ space.wxxl = space[15]; //120px
 
 const colors: DefaultTheme["colors"] = {
   "black-10": "#0D0E1E",
-  "blue-10": "#040641",
+  "blue-10": "#020541",
   "blue-20": "#030641",
   "red-10": "#CC0000",
   "red-20": "#FF2E3D",
