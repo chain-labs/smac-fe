@@ -1,5 +1,6 @@
 import Box from "src/components/Box";
 import Text from "src/components/Text";
+import { DISCORD_INVITE, INSTAGRAM_HANDLE, TWITTER_HANDLE } from "../utils";
 
 const SocialMedia = () => {
   return (
@@ -10,6 +11,9 @@ const SocialMedia = () => {
         </Text>
         <Box row between>
           <Box
+            as="a"
+            href={DISCORD_INVITE}
+            target="_blank"
             bg="white-10"
             height="12rem"
             width="12rem"
@@ -24,6 +28,9 @@ const SocialMedia = () => {
             />
           </Box>
           <Box
+            as="a"
+            href={TWITTER_HANDLE}
+            target="_blank"
             bg="white-10"
             height="12rem"
             width="12rem"
@@ -38,6 +45,9 @@ const SocialMedia = () => {
             />
           </Box>
           <Box
+            as="a"
+            href={INSTAGRAM_HANDLE}
+            target="_blank"
             bg="white-10"
             height="12rem"
             width="12rem"
