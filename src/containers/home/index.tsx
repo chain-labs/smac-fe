@@ -22,6 +22,7 @@ import Roadmap from "./components/Roadmap";
 import Banner from "./components/Banner";
 import TeamSection from "./components/TeamSection";
 import SocialMedia from "./components/SocialMedia";
+import Footer from "src/components/Footer";
 
 export const statuses = {
   PRESALE_NEXT: "PRESALE_NEXT",
@@ -333,6 +334,7 @@ const HomeComp = React.memo(() => {
         <Roadmap title="Post-Sale Roadmap" roadmap={POST_SALE_ROADMAP} />
         <TeamSection />
         <SocialMedia />
+        <Footer />
       </Box>
     </Box>
   );
