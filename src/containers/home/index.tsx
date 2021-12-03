@@ -13,13 +13,13 @@ import {
   CONTRACT_ABI_URL,
   CONTRACT_POLYGON_ADDRESS,
 } from "src/utils/constants";
-import { ethers } from "ethers";
+
+import { ROADMAP, POST_SALE_ROADMAP } from "./utils";
 import useContract from "src/ethereum/useContract";
-import Modal from "src/components/Modal";
-import theme from "src/styleguide/theme";
 import BuyModal from "./components/BuyModal";
 import Overview from "./components/Overview";
 import GallerySlide from "./components/GallerySlide";
+import Roadmap from "./components/Roadmap";
 
 const Banner = React.memo(() => {
   return (
@@ -370,7 +370,9 @@ const HomeComp = React.memo(() => {
         />
         <Overview />
         <GallerySlide />
-        <Overview />
+        <Roadmap title="Roadmap" roadmap={ROADMAP} />
+        <Box mb="16rem" />
+        <Roadmap title="Post-Sale Roadmap" roadmap={POST_SALE_ROADMAP} />
         {/* <------------------ REPETITVE CONTENT TO BE DELETED LATER ENDS ------------------> */}
       </Box>
     </Box>
