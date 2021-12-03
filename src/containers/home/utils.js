@@ -11,5 +11,22 @@ export const POST_SALE_ROADMAP = [
     "3 lucky winners (+1 each) get a chance to experience space center around the globe.",
     "A brand new Tesla* as giveaway for one winner of a member’s exclusive draw.",
     "Charity giveaway of 10 ETH. (conservation of environment & wildlife)"
+]
 
+export const TEAM_MEMBERS = [
+    {
+        name: "David",
+        twitterUrl: "https://twitter.com/david_kim",
+        imageUrl: "/static/images/spaceman-1.jpeg",
+    },
+    {
+        name: "Andrew",
+        twitterUrl: "https://twitter.com/andrew_kim",
+        imageUrl: "/static/images/spaceman-2.jpeg",
+    },
+    {
+        name: "Joseph",
+        twitterUrl: "https://twitter.com/joseph_kim",
+        imageUrl: "/static/images/spaceman-4.jpeg",
+    }
 ]
