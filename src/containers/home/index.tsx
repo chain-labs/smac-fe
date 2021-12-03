@@ -3,7 +3,6 @@ import Image from "next/image";
 import Text from "src/components/Text";
 import React, { useContext, useEffect, useState } from "react";
 
-import { introAnimation, scrollBannerAnimation } from "./animations";
 import CountdownTimer from "src/components/CountdownTimer";
 import { StatesContext } from "src/components/StatesContext";
 import ConnectWalletButton from "src/components/ConnectWalletButton";
@@ -20,44 +19,8 @@ import BuyModal from "./components/BuyModal";
 import Overview from "./components/Overview";
 import GallerySlide from "./components/GallerySlide";
 import Roadmap from "./components/Roadmap";
+import Banner from "./components/Banner";
 
-const Banner = React.memo(() => {
-  return (
-    <Box
-      width="100vw"
-      height="100vh"
-      position="fixed"
-      top={{ mobS: 0, tabS: -10 }}
-      zIndex={-1}
-      className="banner"
-      key="banner"
-    >
-      <Image
-        id="banner-image"
-        src="/static/images/banner.webp"
-        alt="banner"
-        height="9"
-        width="16"
-        layout="responsive"
-        quality={10}
-        priority
-        onLoadingComplete={() => {
-          scrollBannerAnimation();
-          introAnimation();
-        }}
-      ></Image>
-      <Box
-        bg="black-10"
-        opacity="70%"
-        height="120vh"
-        width="100vw"
-        position="absolute"
-        top="0"
-        left="0"
-      ></Box>
-    </Box>
-  );
-});
 
 export const statuses = {
   PRESALE_NEXT: "PRESALE_NEXT",
@@ -83,13 +46,7 @@ const HomeComp = React.memo(() => {
 
   const SMAC = useContract(CONTRACT_POLYGON_ADDRESS, abi, state.provider);
 
-  const [status, setStatus] = useState(statuses.PRESALE_NEXT);
-
-  // const SMAC = useContract(
-  //   CONTRACT_POLYGON_ADDRESS,
-  //   CONTRACT_ABI_URL,
-  //   state.provider
-  // );
+  const [status, setStatus] = useState(statuses.SALE_ACTIVE);
 
   const getContract = async () => {
     const abi = await axios(CONTRACT_ABI_URL);
@@ -351,7 +308,7 @@ const HomeComp = React.memo(() => {
         bg="black-10"
         mt={{ mobS: "15rem", deskM: "62rem", deskL: "80rem" }}
         css={`
-          clip-path: polygon(0% 0%, 50% 4%, 100% 0%, 100% 100%, 0% 100%);
+          clip-path: polygon(0% 0%, 50% 1.8%, 100% 0%, 100% 100%, 0% 100%);
         `}
         position="relative"
       >
