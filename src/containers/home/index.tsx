@@ -20,7 +20,7 @@ import Overview from "./components/Overview";
 import GallerySlide from "./components/GallerySlide";
 import Roadmap from "./components/Roadmap";
 import Banner from "./components/Banner";
-
+import TeamSection from "./components/TeamSection";
 
 export const statuses = {
   PRESALE_NEXT: "PRESALE_NEXT",
@@ -330,7 +330,7 @@ const HomeComp = React.memo(() => {
         <Roadmap title="Roadmap" roadmap={ROADMAP} />
         <Box mb="16rem" />
         <Roadmap title="Post-Sale Roadmap" roadmap={POST_SALE_ROADMAP} />
-        {/* <------------------ REPETITVE CONTENT TO BE DELETED LATER ENDS ------------------> */}
+        <TeamSection />
       </Box>
     </Box>
   );
