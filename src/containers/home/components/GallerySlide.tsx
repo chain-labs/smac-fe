@@ -32,7 +32,7 @@ const GallerySlide = () => {
   }, [count]);
 
   return (
-    <Box>
+    <Box mb="28rem">
       <Box
         id="slider"
         mt="22.5rem"
