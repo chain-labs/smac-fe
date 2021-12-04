@@ -62,6 +62,7 @@ const Navbar = () => {
         pl={{ mobS: "mxxxl", tabS: "wxxs" }}
       >
         <Box
+<<<<<<< HEAD
           width={{ mobS: "32px", tabS: "64px" }}
           bg="none"
           mt={{ mobS: "mxxxl", tabS: "wxxs" }}
@@ -106,16 +107,29 @@ const Navbar = () => {
       >
 =======
         mb="6.4rem"
+=======
+        position="relative"
+        left="0"
+        width="100vw"
+        between
+>>>>>>> 5be0a70 (page done only scrollbar issue remaining to solve)
         // overflowY="hidden"
-        backgroundColor="main-black"
+        backgroundColor="transparent"
        >
 >>>>>>> 0cfe413 (solving scrollbar issue and making images dynamic)
         <Box
           id="navbar"
           row
           between
+<<<<<<< HEAD
           mx="auto"
           width={{ mobS: "90vw", deskM: "116rem" }}
+=======
+          px={{ mobS: "1rem", tabS: "14rem", deskM: "21rem" }}
+          width="100vw"
+          mt="40px"
+          mb="3rem"
+>>>>>>> 5be0a70 (page done only scrollbar issue remaining to solve)
         >
           <Box
             height={{ mobS: "3.6rem", tabS: "6rem", deskM: "7.2rem" }}
