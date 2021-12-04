@@ -15,40 +15,58 @@ const GalleryPageComp = () => {
 		color: "white",
 		margin: `2rem`,
 	};
-	// const arr = ["Nft1", "Nft2", "Nft3", "Nft4", "Nft5", "Nft6", "Nft7"];
 	return (
-		<Box bg="black-10" width="100vw" minHeight="100vh">
+		<Box bg="main-black" width="100vw" minHeight="100vh">
 			<Box>
 				<Navbar />
 			</Box>
 			<Box ml="23rem">
 				<Text
+					id="all-spacemen"
 					as="s2"
 					color="white-10"
 					mr="64px"
 					cursor="pointer"
-					onClick={() => setAllSpaceMen(true)}
+					borderBottom="2px solid white"
+					py="mxxs"
+					onClick={() => {
+						setAllSpaceMen(true);
+						document.getElementById("owned").style.color =
+							"rgba(255, 255, 255, 0.6)";
+						document.getElementById("all-spacemen").style.color = "white";
+						document.getElementById("all-spacemen").style.borderBottom =
+							"2px solid white";
+						document.getElementById("owned").style.borderBottom = "none";
+					}}
 				>
 					All SpaceMen
 				</Text>
 				<Text
+					id="owned"
 					as="s2"
-					color="white-10"
+					color="rgba(255, 255, 255, 0.6)"
 					cursor="pointer"
-					onClick={() => setAllSpaceMen(false)}
+					py="mxxs"
+					onClick={() => {
+						setAllSpaceMen(false);
+						document.getElementById("all-spacemen").style.color =
+							"rgba(255, 255, 255, 0.6)";
+						document.getElementById("owned").style.color = "white";
+						document.getElementById("owned").style.borderBottom =
+							"2px solid white";
+						document.getElementById("all-spacemen").style.borderBottom = "none";
+					}}
 				>
 					Owned
 				</Text>
 			</Box>
-			{/* <OwnedTokenComp /> */}
-					<Box >
-
-					<If
-						condition={allSpaceMen}
-						then={<AllTokens />}
-						else={<OwnedTokenComp />}
-					/>
-					</Box>
+			<Box>
+				<If
+					condition={allSpaceMen}
+					then={<AllTokens />}
+					else={<OwnedTokenComp />}
+				/>
+			</Box>
 		</Box>
 	);
 };

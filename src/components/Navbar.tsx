@@ -8,14 +8,11 @@ const Navbar = () => {
     return (
         <Box
         position="relative"
-        top="10"
-        py="10px"
         left="0"
         width="100vw"
         between
-        mb="6.4rem"
         // overflowY="hidden"
-        backgroundColor="main-black"
+        backgroundColor="transparent"
        >
         <Box
           id="navbar"
@@ -23,6 +20,8 @@ const Navbar = () => {
           between
           px={{ mobS: "1rem", tabS: "14rem", deskM: "21rem" }}
           width="100vw"
+          mt="40px"
+          mb="3rem"
         >
           <Box
             height="7.2rem"
