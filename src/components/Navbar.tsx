@@ -15,7 +15,7 @@ const Navbar = () => {
         between
         mb="6.4rem"
         // overflowY="hidden"
-        backgroundColor="black"
+        backgroundColor="main-black"
        >
         <Box
           id="navbar"
@@ -56,7 +56,7 @@ const Navbar = () => {
               row
               cursor="pointer"
               position="relative"
-            //   overflow="hidden"
+              overflow="hidden"
               color="white-10"
             >
               <Text
