@@ -5,12 +5,20 @@ import Text from "./Text";
 const Footer = () => {
   return (
     <Box pt="wxxl" pb="wxxs">
-      <Box row between mx="auto" alignItems="center" width="112rem" mb="wl">
-        <Box position="relative" height="10.4rem" width="35.7rem">
+      <Box
+        display="flex"
+        flexDirection={{ mobS: "column", tabS: "row" }}
+        justifyContent={{ mobS: "flex-start", tabS: "space-between" }}
+        mx="auto"
+        alignItems={{ mobS: "flex-start", tabS: "center" }}
+        width={{ mobS: "90vw", deskM: "112rem" }}
+        mb="wl"
+      >
+        <Box position="relative" height="10.4rem" width="35.7rem" mb="mxxxl">
           <Image src="/static/images/brand.png" layout="fill" />
         </Box>
-        <Box row>
-          <Box column mr="wxxs">
+        <Box row center flexWrap="wrap">
+          <Box column mr="wxxs" mb={{ mobS: "4rem", tabS: "0" }}>
             <Box
               as="a"
               href=""

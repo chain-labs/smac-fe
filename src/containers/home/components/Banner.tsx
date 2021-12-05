@@ -14,23 +14,34 @@ const Banner = memo(() => {
       className="banner"
       key="banner"
     >
-      <Image
-        id="banner-image"
-        src="/static/images/banner.webp"
-        alt="banner"
-        height="9"
-        width="16"
-        layout="responsive"
-        quality={10}
-        priority
-        onLoadingComplete={() => {
-          scrollBannerAnimation();
-          introAnimation();
+      <Box
+        height={{ mobS: "50rem", tabS: "56.25vw" }}
+        width={{ mobS: "888px", tabS: "100vw" }}
+        position="relative"
+        ml={{ mobS: "-27rem", tabS: "0", deskL: "0" }}
+        mt={{ mobS: "12rem", tabS: "0", deskL: "0" }}
+        transform={{
+          mobS: "scale(1.6)",
+          tabS: "scale(1)",
+          deskL: "scale(1)",
         }}
-      ></Image>
+      >
+        <Image
+          id="banner-image"
+          src="/static/images/banner.webp"
+          alt="banner"
+          layout="fill"
+          quality={10}
+          priority
+          onLoadingComplete={() => {
+            scrollBannerAnimation();
+            introAnimation();
+          }}
+        ></Image>
+      </Box>
       <Box
         bg="black-10"
-        opacity="70%"
+        opacity="80%"
         height="120vh"
         width="100vw"
         position="absolute"
