@@ -26,23 +26,23 @@ const AllTokens = () => {
 							<Box mb="2rem"
 								mr="mxl"
 								position="relative"
-								height={{ tabS: "12rem", deskL: "21rem" }}
-								width={{ tabS: "12rem", deskL: "21rem" }}
+								height={{ mobS: "12rem", deskL: "21rem" }}
+								width={{ mobS: "12rem", deskL: "21rem" }}
 							>
 								<Image src={`/static/images/Nft-${arr[i]}.png`} layout="fill" />
 							</Box>
 							<Box mb="2rem"
 								mr="mxl"
 								position="relative"
-								height={{ tabS: "12rem", deskL: "21rem" }}
-								width={{ tabS: "12rem", deskL: "21rem" }}
+								height={{ mobS: "12rem", deskL: "21rem" }}
+								width={{ mobS: "12rem", deskL: "21rem" }}
 							>
 								<Image src={`/static/images/Nft-${arr[i]}.png`} layout="fill" />
 							</Box><Box
 								mr="mxl"
 								position="relative"
-								height={{ tabS: "12rem", deskL: "21rem" }}
-								width={{ tabS: "12rem", deskL: "21rem" }}
+								height={{ mobS: "12rem", deskL: "21rem" }}
+								width={{ mobS: "12rem", deskL: "21rem" }}
 							>
 								<Image src={`/static/images/Nft-${arr[i]}.png`} layout="fill" />
 							</Box>

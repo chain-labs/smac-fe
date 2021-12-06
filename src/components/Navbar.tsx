@@ -18,7 +18,7 @@ const Navbar = () => {
           id="navbar"
           row
           between
-          px={{ mobS: "1rem", tabS: "14rem", deskM: "21rem" }}
+          px={{ mobS: "1rem", tabS: "14rem", deskL: "21rem" }}
           width="100vw"
           mt="40px"
           mb="3rem"
