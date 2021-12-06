@@ -7,6 +7,7 @@ export const fontSizes = {
   s1: { mobS: "2rem", tabS: "2.4rem", deskL: "3.6rem" },
   s2: { mobS: "2rem", tabS: "2rem", deskL: "2.4rem" },
   b1: { mobS: "1.6rem", tabS: "2rem", deskL: "2.4rem" },
+  links: {mobS:"2rem", tabS:"3.6rem",deskL:"2rem"}
 };
 
 export const charSpacing = {
@@ -34,7 +35,7 @@ const fontWeights = {
 };
 
 export interface TextProps extends BoxProps {
-  as?: "h1" | "h2" | "s1" | "s2" | "b1";
+  as?: "h1" | "h2" | "s1" | "s2" | "b1" | "links";
   fontWeight?: "semi-bold" | "bold" | "medium" | "regular" | "thin";
 
   children?: string | React.ReactNode;
