@@ -15,14 +15,14 @@ const Banner = memo(() => {
       key="banner"
     >
       <Box
-        height={{ mobS: "50rem", tabS: "56.25vw" }}
-        width={{ mobS: "888px", tabS: "100vw" }}
+        height={{ mobS: "112.5vw", tabS: "56.25vw" }}
+        width={{ mobS: "200vw", tabS: "100vw" }}
         position="relative"
-        ml={{ mobS: "-27rem", tabS: "0", deskL: "0" }}
-        mt={{ mobS: "12rem", tabS: "0", deskL: "0" }}
+        ml={{ mobS: "-20rem", tabS: "0", tabL: "0", deskL: "0" }}
+        mt={{ mobS: "5rem", tabS: "10rem", tabL: "0", deskL: "0" }}
         transform={{
-          mobS: "scale(1.6)",
-          tabS: "scale(1)",
+          mobS: "scale(1.5)",
+          tabS: "scale(1.2)",
           deskL: "scale(1)",
         }}
       >

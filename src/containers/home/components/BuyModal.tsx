@@ -4,6 +4,7 @@ import Box from "src/components/Box";
 import Modal from "src/components/Modal";
 import Text from "src/components/Text";
 import theme from "src/styleguide/theme";
+import { BigNumber } from "ethers";
 
 const BuyModal = ({
   presalePrice,
@@ -26,16 +27,24 @@ const BuyModal = ({
     if (salePrice && presalePrice) {
       if (presale) {
         const presalePriceInMatic = ethers.utils.formatUnits(presalePrice, 18);
+        // const totalPrice = ethers.utils.formatUnits(
+        //   presalePrice * numberOfTokens,
+        //   18
+        // );
         const totalPrice = ethers.utils.formatUnits(
-          presalePrice * numberOfTokens,
+          BigNumber.from(numberOfTokens).mul(presalePrice),
           18
         );
         setPrice(presalePriceInMatic);
         setTotal(totalPrice);
       } else {
         const salePriceInMatic = ethers.utils.formatUnits(salePrice, 18);
+        // const totalPrice = ethers.utils.formatUnits(
+        //   salePrice * numberOfTokens,
+        //   18
+        // );
         const totalPrice = ethers.utils.formatUnits(
-          salePrice * numberOfTokens,
+          BigNumber.from(numberOfTokens).mul(salePrice),
           18
         );
         setPrice(salePriceInMatic);
@@ -47,13 +56,16 @@ const BuyModal = ({
   useEffect(() => {
     if (presale) {
       const totalPrice = ethers.utils.formatUnits(
-        presalePrice * numberOfTokens,
+        BigNumber.from(numberOfTokens).mul(presalePrice),
         18
       );
       setTotal(totalPrice);
       return;
     }
-    const totalPrice = ethers.utils.formatUnits(salePrice * numberOfTokens, 18);
+    const totalPrice = ethers.utils.formatUnits(
+      BigNumber.from(numberOfTokens).mul(salePrice),
+      18
+    );
     setTotal(totalPrice);
   }, [numberOfTokens]);
 
