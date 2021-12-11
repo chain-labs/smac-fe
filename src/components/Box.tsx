@@ -64,6 +64,7 @@ export interface BoxProps
 	whiteSpace?: '-moz-pre-wrap' | 'break-spaces' | 'normal' | 'nowrap' | 'pre' | 'pre-line' | 'pre-wrap';
 	WebkitBoxOrient?: 'block-axis' | 'horizontal' | 'inherit' | 'inline-axis' | 'vertical';
 	WebkitLineClamp?: 'none' | number;
+	WebkitScrollbarTrack?: 'none'
 	transform?: ResponsiveValue<string>;
 	row?: boolean;
 	column?: boolean;
@@ -104,6 +105,7 @@ const customProps = {
 	whiteSpace: true,
 	WebkitBoxOrient: true,
 	WebkitLineClamp: true,
+	WebkitScrollbarTack : true,
 };
 
 const customPropsStyleFn = system(customProps as any);

@@ -13,7 +13,7 @@ const useContract = (address, abi, provider) => {
         setContract(undefined);
         console.log("Error creating contract", error);
       }
-    }
+    } 
   }, [provider, abi]);
 
   return contract;
