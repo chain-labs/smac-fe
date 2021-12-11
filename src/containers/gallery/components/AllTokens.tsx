@@ -10,12 +10,7 @@ const AllTokens = ({cid}) => {
 	const [arr, setArr] = useState([...Array(10)].map((_, i) => i + 1));
 	const [left, setLeft] = useState<string>("23rem");
 	const state = useContext(StatesContext);
-	// const Collection = useContract("Collection", cid, state.provider);
 
-	useEffect(() => {
-		// document.getElementById('scroll').style.scrollbarW
-		// $.rule('h3','style').fadeOut('slow').fadeIn('slow');
-	}, []);
 	return (
 		<Box top="5rem" ml={left}>
 			<Box
@@ -25,7 +20,6 @@ const AllTokens = ({cid}) => {
 				onScroll={() => {
 					setLeft("0");
 				}}
-				// hideScrollBar
 				css={`
 					::-webkit-scrollbar {
 						display: none;
@@ -39,8 +33,8 @@ const AllTokens = ({cid}) => {
 								mb="2rem"
 								mr="mxl"
 								position="relative"
-								height={{ mobS: "12rem", deskL: "21rem" }}
-								width={{ mobS: "12rem", deskL: "21rem" }}
+								height={{ mobS: "12rem", tabS:"19.6rem", deskL: "23rem" }}
+								width={{ mobS: "12rem", tabS:"19.6rem", deskL: "23rem" }}
 							>
 								<Image src={`/static/images/Nft-${arr[i]}.png`} layout="fill" />
 							</Box>
@@ -48,16 +42,16 @@ const AllTokens = ({cid}) => {
 								mb="2rem"
 								mr="mxl"
 								position="relative"
-								height={{ mobS: "12rem", deskL: "21rem" }}
-								width={{ mobS: "12rem", deskL: "21rem" }}
+								height={{ mobS: "12rem", tabS:"19.6rem", deskL: "23rem" }}
+								width={{ mobS: "12rem", tabS:"19.6rem", deskL: "23rem" }}
 							>
 								<Image src={`/static/images/Nft-${arr[i]}.png`} layout="fill" />
 							</Box>
 							<Box
 								mr="mxl"
 								position="relative"
-								height={{ mobS: "12rem", deskL: "21rem" }}
-								width={{ mobS: "12rem", deskL: "21rem" }}
+								height={{ mobS: "12rem", tabS:"19.6rem", deskL: "23rem" }}
+								width={{ mobS: "12rem", tabS:"19.6rem", deskL: "23rem" }}
 							>
 								<Image src={`/static/images/Nft-${arr[i]}.png`} layout="fill" />
 							</Box>
