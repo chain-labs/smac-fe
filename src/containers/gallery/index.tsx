@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Box from "src/components/Box";
 import Navbar from "src/components/Navbar";
 import Text from "src/components/Text";
@@ -6,9 +6,35 @@ import OwnedTokenComp from "./components/OwnedTokens";
 import If from "src/components/If";
 import AllTokens from "./components/AllTokens";
 import Container from "src/components/Container";
+import useSigner from "src/ethereum/useSigner";
+import useListeners from "src/ethereum/useListeners";
+import { StatesContext } from "../../components/StatesContext";
+import useEthers from "src/ethereum/useEthers";
 
-const GalleryPageComp = () => {
+
+const GalleryPageComp = ({ cid }) => {
 	const [allSpaceMen, setAllSpaceMen] = useState<boolean>(true);
+	const [provider, setProvider, ethers] = useEthers();
+	const [signer, setSigner] = useSigner(provider);
+	const [address, setAddress] = useState<string>("");
+	const state = useContext(StatesContext);
+
+	useListeners(provider, setProvider, setSigner);
+
+	useEffect(() => {
+		state.setProvider(provider);
+		state.setSigner(signer);
+		const getAddress = async () => {
+			try {
+				const address = await signer?.getAddress();
+				console.log(typeof address)
+				setAddress(address);
+			} catch (err) {
+				console.log(err);
+			}
+		};
+		getAddress();
+	}, [signer, provider]);
 	const child = {
 		width: `25em`,
 		height: `100%`,
@@ -63,8 +89,8 @@ const GalleryPageComp = () => {
 			<Box>
 				<If
 					condition={allSpaceMen}
-					then={<AllTokens />}
-					else={<OwnedTokenComp />}
+					then={<AllTokens cid={cid} />}
+					else={<OwnedTokenComp cid={cid} ownerAddress={address}/>}
 				/>
 			</Box>
 		</Box>
