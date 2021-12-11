@@ -24,6 +24,8 @@ import SocialMedia from "./components/SocialMedia";
 import Footer from "src/components/Footer";
 import CountdownTimer from "src/components/CountdownTimer";
 import ConnectWalletButton from "src/components/ConnectWalletButton";
+import Navbar from "src/components/Navbar";
+import Hero from "./components/Hero";
 
 export const statuses = {
   PRESALE_NEXT: "PRESALE_NEXT",
@@ -54,6 +56,7 @@ const HomeComp = React.memo(() => {
   const getContract = async () => {
     const abi = await axios(CONTRACT_ABI_URL);
     console.log(abi);
+    console.log({ CONTRACT_POLYGON_ADDRESS });
 
     setAbi(JSON.parse(abi.data.result));
   };
@@ -88,6 +91,7 @@ const HomeComp = React.memo(() => {
           isPresaleActive,
           isSaleActive,
         });
+        console.log({ presalePrice });
       } catch (error) {
         console.log({ error });
       }
@@ -98,7 +102,7 @@ const HomeComp = React.memo(() => {
   }, [SMAC]);
 
   return (
-    <Box>
+    <Box overflowX="hidden">
       <If
         condition={displayModal}
         then={
@@ -123,198 +127,20 @@ const HomeComp = React.memo(() => {
         top="0"
       ></Box>
       <Banner />
-      <Box
-        position="absolute"
-        top="10"
-        left="0"
-        width="100vw"
-        between
-        overflowY="hidden"
-       >
-        <Box
-          id="navbar"
-          row
-          between
-          px={{ mobS: "1rem", tabS: "14rem", deskM: "21rem" }}
-          width="100vw"
-        >
-          <Box
-            height="7.2rem"
-            width="24.6rem"
-            position="relative"
-            overflow="hidden"
-          >
-            <Image src="/static/images/brand.png" layout="fill" quality="100" />
-          </Box>
-          <Box row>
-            <Text fontSize="2rem" fontWeight="medium" color="white-10" mr="wm">
-              About
-            </Text>
-            <Text fontSize="2rem" fontWeight="medium" color="white-10" mr="wm">
-              Roadmap
-            </Text>
-            <Text fontSize="2rem" fontWeight="medium" color="white-10" mr="wm">
-              Team
-            </Text>
-            <Text fontSize="2rem" fontWeight="medium" color="white-10">
-              Gallery
-            </Text>
-          </Box>
-          <Box as="a" href={DISCORD_INVITE} target="_blank">
-            <Box
-              border="2px solid"
-              borderColor="white-10"
-              px="mm"
-              py="mm"
-              borderRadius="8px"
-              row
-              cursor="pointer"
-              position="relative"
-              overflow="hidden"
-              color="white-10"
-            >
-              <Text
-                fontSize="2rem"
-                fontWeight="semi-bold"
-                color="white-10"
-                mr="mm"
-              >
-                Join Discord
-              </Text>
-              <Image
-                src="/static/images/icons/up-right.png"
-                height="24"
-                width="24"
-              />
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-      <Box
-        position="absolute"
-        top="30%"
-        left="50%"
-        transform="translateX(-50%)"
-        column
-        center
-        minWidth="70%"
-        zIndex={3}
-      >
-        <Text
-          id="headline"
-          as="h1"
-          color="white-10"
-          mb="8rem"
-          letterSpacing="5px"
-          textTransform="uppercase"
-          textAlign="center"
-          textShadow="0 0 20px #000000"
-        >
-          Space Man Astro Club
-        </Text>
-        <If
-          condition={status === statuses.PRESALE_NEXT}
-          then={
-            <Box id="timer" column center color="white-10" mb="wm">
-              <Text
-                as="s2"
-                textTransform="uppercase"
-                letterSpacing="0.5rem"
-                mb="mm"
-                textShadow="0 0 20px #000000"
-              >
-                Pre-sale Starts In
-              </Text>
-              <CountdownTimer
-                status={status}
-                setStatus={setStatus}
-                deadline={projectDetails?.presaleTime}
-              />
-            </Box>
-          }
-          else={
-            <If
-              condition={
-                status === statuses.PRESALE_ACTIVE ||
-                status === statuses.SALE_NEXT
-              }
-              then={
-                <Box id="timer" column center color="white-10" mb="wm">
-                  <Text
-                    as="s2"
-                    textTransform="uppercase"
-                    letterSpacing="0.5rem"
-                    mb="mm"
-                    textShadow="0 0 20px #000000"
-                  >
-                    Sale Starts In
-                  </Text>
-                  <CountdownTimer
-                    status={status}
-                    setStatus={setStatus}
-                    deadline={projectDetails?.saleTime}
-                  />
-                </Box>
-              }
-            />
-          }
-        />
-        <If
-          condition={state.address}
-          then={
-            <React.Fragment>
-              <Box
-                as="button"
-                className="cta-btn"
-                mt={status === statuses.SALE_ACTIVE ? "12rem" : "0"}
-                bg="red-10"
-                zIndex={2}
-                px="wxs"
-                py="ml"
-                color="white-10"
-                borderRadius="8px"
-                cursor="pointer"
-                border="none"
-                fontFamily="inherit"
-                boxShadow="0 0 10px #000000"
-                onClick={() => setDisplayModal(true)}
-              >
-                <Text
-                  fontSize="2.4rem"
-                  fontWeight="semi-bold"
-                  letterSpacing="0.05em"
-                >
-                  Buy Spacemen
-                </Text>
-              </Box>
-              <Box row mt="mxxxl" id="address">
-                <Text
-                  as="s2"
-                  color="white"
-                  mr="ms"
-                  textShadow="0 0 20px #000000"
-                >
-                  Wallet Connected:
-                </Text>
-                <Text as="s2" color="red-20" textShadow="0 0 20px #000000">
-                  {state.address}
-                </Text>
-              </Box>
-            </React.Fragment>
-          }
-          else={<ConnectWalletButton status={status} />}
-        />
-      </Box>
-      {/* <-------------BANNER BACKGROUND ENDS----------------> */}
-
-      {/* <------------- WEBSITE BODY STARTS HERE ----------------> */}
+      <Navbar />
+      <Hero
+        status={status}
+        setStatus={setStatus}
+        projectDetails={projectDetails}
+        setDisplayModal={setDisplayModal}
+      />
       <Box
         color="white"
         className="body"
         bg="black-10"
-        mt={{ mobS: "15rem", deskM: "62rem", deskL: "80rem" }}
+        mt={{ mobS: "2rem", deskM: "2rem", deskL: "2rem" }}
         css={`
-          clip-path: polygon(0% 0%, 50% 1.8%, 100% 0%, 100% 100%, 0% 100%);
+          clip-path: polygon(0% 0%, 50% 1%, 100% 0%, 100% 100%, 0% 100%);
         `}
         position="relative"
       >
@@ -334,7 +160,7 @@ const HomeComp = React.memo(() => {
         <Overview />
         <GallerySlide />
         <Roadmap title="Roadmap" roadmap={ROADMAP} />
-        <Box mb="16rem" />
+        <Box mb={{ mobS: "wxs", tabS: "wxl", deskM: "16rem" }} />
         <Roadmap title="Post-Sale Roadmap" roadmap={POST_SALE_ROADMAP} />
         <TeamSection />
         <SocialMedia />
