@@ -95,5 +95,16 @@ export const introAnimation = () => {
        ease: Power3.easeOut
      }
    )
-  };
+};
+  
+export const galleryAnimation = () => {
+  gsap.fromTo("#slider", {translateX: "0%"}, {
+    translateX: "-200%",
+    duration: 9000,
+    repeat: -1,
+    onComplete: () => {
+      galleryAnimation();
+    }
+  })
+}
   

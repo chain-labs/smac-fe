@@ -54,6 +54,7 @@ const HomeComp = React.memo(() => {
   const getContract = async () => {
     const abi = await axios(CONTRACT_ABI_URL);
     console.log(abi);
+    console.log({ CONTRACT_POLYGON_ADDRESS });
 
     setAbi(JSON.parse(abi.data.result));
   };
@@ -88,6 +89,7 @@ const HomeComp = React.memo(() => {
           isPresaleActive,
           isSaleActive,
         });
+        console.log({ presalePrice });
       } catch (error) {
         console.log({ error });
       }
@@ -98,7 +100,7 @@ const HomeComp = React.memo(() => {
   }, [SMAC]);
 
   return (
-    <Box>
+    <Box overflowX="hidden">
       <If
         condition={displayModal}
         then={
@@ -312,9 +314,9 @@ const HomeComp = React.memo(() => {
         color="white"
         className="body"
         bg="black-10"
-        mt={{ mobS: "15rem", deskM: "62rem", deskL: "80rem" }}
+        mt={{ mobS: "2rem", deskM: "2rem", deskL: "2rem" }}
         css={`
-          clip-path: polygon(0% 0%, 50% 1.8%, 100% 0%, 100% 100%, 0% 100%);
+          clip-path: polygon(0% 0%, 50% 1%, 100% 0%, 100% 100%, 0% 100%);
         `}
         position="relative"
       >
@@ -334,7 +336,7 @@ const HomeComp = React.memo(() => {
         <Overview />
         <GallerySlide />
         <Roadmap title="Roadmap" roadmap={ROADMAP} />
-        <Box mb="16rem" />
+        <Box mb={{ mobS: "wxs", tabS: "wxl", deskM: "16rem" }} />
         <Roadmap title="Post-Sale Roadmap" roadmap={POST_SALE_ROADMAP} />
         <TeamSection />
         <SocialMedia />
