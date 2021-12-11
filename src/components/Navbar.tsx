@@ -1,124 +1,37 @@
-import Box from "./Box";
-import Text from "./Text";
+import React from 'react'
+import Box from './Box'
+import Text from './Text'
 import Image from "next/image";
-import {
-  DISCORD_INVITE,
-  INSTAGRAM_HANDLE,
-  TWITTER_HANDLE,
-} from "src/containers/home/utils";
-import Hamburger from "src/../public/static/images/icons/hamburger.svg";
-import RightArrow from "src/../public/static/images/icons/arrow-right.svg";
-import { gsap } from "gsap";
-import Discord from "src/../public/static/images/icons/discord-fill.svg";
-import Twitter from "src/../public/static/images/icons/twitter-fill.svg";
-import Instagram from "src/../public/static/images/icons/instagram-fill.svg";
 
-const NavLink = ({ href, text }) => {
-  return (
-    <Box as="a" href={href} mb="wm">
-      <Text
-        fontSize={{ mobS: "2rem", tabS: "3.6rem" }}
-        fontWeight="medium"
-        color="white-10"
-      >
-        {text}
-      </Text>
-    </Box>
-  );
-};
 
 const Navbar = () => {
-  const openDrawer = () => {
-    gsap.fromTo(
-      "#drawer",
-      { display: "block", xPercent: 110 },
-      { display: "block", xPercent: 0 }
-    );
-  };
-
-  const closeDrawer = () => {
-    gsap.fromTo(
-      "#drawer",
-      { xPercent: 0 },
-      {
-        xPercent: 115,
-        display: "none",
-      }
-    );
-    // document.getElementById("drawer").style.display = "none";
-  };
-
-  return (
-    <Box overflowX="hidden">
-      <Box
-        id="drawer"
-        position="fixed"
-        left="0"
-        bg="black-10"
-        height="100vh"
-        width="100vw"
-        zIndex={100}
-        display="none"
-        pl={{ mobS: "mxxxl", tabS: "wxxs" }}
-      >
+    return (
         <Box
-          width={{ mobS: "32px", tabS: "64px" }}
-          bg="none"
-          mt={{ mobS: "mxxxl", tabS: "wxxs" }}
-          onClick={() => {
-            closeDrawer();
-          }}
-        >
-          <RightArrow />
-        </Box>
-        <Box column mt={{ mobS: "10rem", tabS: "15rem" }}>
-          <NavLink href="" text="About" />
-          <NavLink href="" text="Roadmap" />
-          <NavLink href="" text="Team" />
-          <NavLink href="" text="Gallery" />
-          <Box
-            color="white-10"
-            row
-            between
-            width={{ mobS: "70vw", tabS: "50vw" }}
-          >
-            <Box as="a" href={DISCORD_INVITE}>
-              <Discord />
-            </Box>
-            <Box as="a" href={TWITTER_HANDLE}>
-              <Twitter />
-            </Box>
-            <Box as="a" href={INSTAGRAM_HANDLE}>
-              <Instagram />
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-      <Box
-        position="absolute"
-        top="0"
+        position="relative"
         left="0"
         width="100vw"
         between
-        overflow="hidden"
-        mt={{ mobS: "mxxxl", deskM: "wxxs" }}
-      >
+        // overflowY="hidden"
+        backgroundColor="transparent"
+       >
         <Box
           id="navbar"
           row
           between
-          mx="auto"
-          width={{ mobS: "90vw", deskM: "116rem" }}
+          px={{ mobS: "1rem", tabS: "14rem", deskL: "21rem" }}
+          width="100vw"
+          mt="40px"
+          mb="3rem"
         >
           <Box
-            height={{ mobS: "3.6rem", tabS: "6rem", deskM: "7.2rem" }}
-            width={{ mobS: "12.5rem", tabS: "21.3rem", deskM: "24.6rem" }}
+            height="7.2rem"
+            width="24.6rem"
             position="relative"
-            overflow="hidden"
+            // overflow="hidden"
           >
-            <Image src="/static/images/brand.svg" layout="fill" quality="100" />
+            <Image src="/static/images/brand.png" layout="fill" quality="100" />
           </Box>
-          <Box row display={{ mobS: "none", tabL: "flex" }}>
+          <Box row>
             <Text fontSize="2rem" fontWeight="medium" color="white-10" mr="wm">
               About
             </Text>
@@ -132,12 +45,7 @@ const Navbar = () => {
               Gallery
             </Text>
           </Box>
-          <Box
-            as="a"
-            href={DISCORD_INVITE}
-            display={{ mobS: "none", deskM: "flex" }}
-            target="_blank"
-          >
+          <a href="https://discord.gg/duEvPCgR4t" target="_blank">
             <Box
               border="2px solid"
               borderColor="white-10"
@@ -164,23 +72,10 @@ const Navbar = () => {
                 width="24"
               />
             </Box>
-          </Box>
-          <Box
-            // as="button"
-            border="none"
-            bg="none"
-            display={{ mobS: "flex", tabL: "none" }}
-            height={{ mobS: "32px", tabS: "64px" }}
-            onClick={() => {
-              openDrawer();
-            }}
-          >
-            <Hamburger />
-          </Box>
+          </a>
         </Box>
       </Box>
-    </Box>
-  );
-};
+    )
+}
 
-export default Navbar;
+export default Navbar

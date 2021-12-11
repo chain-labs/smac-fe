@@ -4,37 +4,18 @@ import Image from "next/image";
 
 const Overview = () => {
   return (
-    <Box
-      display="flex"
-      pt="20rem"
-      mx="auto"
-      maxWidth={{ mobS: "90vw", tabS: "95vw", deskM: "116rem" }}
-      center
-    >
-      <Box column>
-        <Text
-          as="h2"
-          color="red-20"
-          textAlign={{ mobS: "center", tabS: "start" }}
-        >
+    <Box display="flex" pt="20rem" center pl="20rem" pr="15rem">
+      <Box mt="0rem" column>
+        <Text as="h2" color="red-20">
           10,000 <br />
-          generative characters, <br /> ready to tell a story.
+          Generative Characters <br /> ready to tell a story.
         </Text>
-        <Box display={{ mobS: "block", tabS: "none" }} mt="mxxxl">
-          <Image
-            src="/static/images/spacemen.gif"
-            height="490"
-            width="490"
-            quality="75"
-          />
-        </Box>
         <Text
           as="b1"
           mt="mxxxl"
           maxWidth="51rem"
           fontFamily="Space Grotesk"
           color="#EAEAEA"
-          textAlign={{ mobS: "center", tabS: "start" }}
         >
           SMAC is a collection of 10,000 Generative pieces of art with
           references from an upcoming comic book.
@@ -45,13 +26,12 @@ const Overview = () => {
           maxWidth="51rem"
           fontFamily="Space Grotesk"
           color="#EAEAEA"
-          textAlign={{ mobS: "center", tabS: "start" }}
         >
           The collection focuses on characters and their stylised appearance as
           well as their part in the story arc based on the SMAC comic book.
         </Text>
       </Box>
-      <Box ml={{tabS: "1rem", deskM: "6rem"}} display={{ mobS: "none", tabS: "block" }}>
+      <Box ml="6rem">
         <Image
           src="/static/images/spacemen.gif"
           height="490"
