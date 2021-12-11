@@ -4,13 +4,26 @@ import Text from "./Text";
 
 const Footer = () => {
   return (
-    <Box pt="wxxl" pb="wxxs">
-      <Box row between mx="auto" alignItems="center" width="112rem" mb="wl">
-        <Box position="relative" height="10.4rem" width="35.7rem">
-          <Image src="/static/images/brand.png" layout="fill" />
+    <Box pt={{ mobS: "mxxxl", tabS: "wxxl" }} pb="wxxs">
+      <Box
+        display="flex"
+        flexDirection={{ mobS: "column", tabS: "row" }}
+        justifyContent={{ mobS: "flex-start", tabS: "space-between" }}
+        mx="auto"
+        alignItems={{ mobS: "flex-start", tabS: "center" }}
+        width={{ mobS: "90vw", deskM: "112rem" }}
+        mb="wl"
+      >
+        <Box
+          position="relative"
+          height={{ mobS: "7.2rem", mobL: "10.4rem" }}
+          width={{ mobS: "24.6rem", mobL: "35.7rem" }}
+          mb="mxxxl"
+        >
+          <Image src="/static/images/brand.svg" layout="fill" />
         </Box>
-        <Box row>
-          <Box column mr="wxxs">
+        <Box row flexWrap="wrap">
+          <Box column mr="wxxs" mb={{ mobS: "wxxs", tabS: "0" }} order={1}>
             <Box
               as="a"
               href=""
@@ -51,7 +64,7 @@ const Footer = () => {
               Gallery
             </Box>
           </Box>
-          <Box column mr="wxxs">
+          <Box column mr="wxxs" order={{ mobS: 3, tabL: 2 }}>
             <Box
               as="a"
               href=""
@@ -82,16 +95,16 @@ const Footer = () => {
               Twitter
             </Box>
           </Box>
-          <Box column>
+          <Box column order={{ mobS: 2, tabL: 3 }}>
             <Box
               as="a"
               href=""
               fontSize="1.8rem"
               fontWeight="300"
               color="#EAEAEA"
-              mb="mxxl"
+              mb="mxxxl"
             >
-              Termas and Conditions
+              Terms and Conditions
             </Box>
             <Box
               as="a"
@@ -99,7 +112,7 @@ const Footer = () => {
               fontSize="1.8rem"
               fontWeight="300"
               color="#EAEAEA"
-              mb="mxxl"
+              mb="mxxxl"
             >
               View on Opensea
             </Box>

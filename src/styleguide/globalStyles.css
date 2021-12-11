@@ -26,6 +26,7 @@ html {
 
 div {
 	font-size: 1.6rem;
+	overflow-x: hidden;
 }
 
 * {
@@ -33,6 +34,7 @@ div {
 	scroll-behavior: smooth;
 	margin: 0;
 	padding: 0;
+	overflow-x: hidden;
 }
 
 /* Chrome, Safari, Edge, Opera */
