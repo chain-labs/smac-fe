@@ -19,7 +19,6 @@ const OwnedTokenComp = ({ cid, ownerAddress }) => {
 	useEffect(() => {
 		console.log(Collection);
 		const ownerTokens = [];
-		// console.log(ownerAddress)
 		const getTokens = async () => {
 			try {
 				const projectURI = await Collection.callStatic.projectURI();
@@ -44,10 +43,8 @@ const OwnedTokenComp = ({ cid, ownerAddress }) => {
 
 	const getTokenURI = async() =>{
 		if(projectURI!=""){
-
 			const link = projectURI.slice(7,projectURI.length-1)
 			const res = await axios.get(`https://ipfs.io/ipfs/${link}/1.json`);
-			// const res = await axios.get(`https://ipfs.io/ipfs/QmbmZZWuaEi5BnqicqYXJ11YMjJk58zGbKQQak9uCVzqTi/11.json`);
 			console.log(res.data.image.slice(7,res.data.image.length-5));
 			setBaseId(res.data.image.slice(7,res.data.image.length-5))
 		}
@@ -62,8 +59,8 @@ const OwnedTokenComp = ({ cid, ownerAddress }) => {
 						mr="mxl"
 						backgroundColor="white"
 						position="relative"
-						height={{ tabS: "12rem", deskL: "21rem" }}
-						width={{ tabS: "12rem", deskL: "21rem" }}
+						height={{ tabS: "19.6rem", deskL: "23rem" }}
+						width={{ tabS: "19.6rem", deskL: "23rem" }}
 					>
 						<Image src={`https://ipfs.io/ipfs/${baseId}${ownerTokens[i]}.png`} layout="fill" />
 					</Box>
