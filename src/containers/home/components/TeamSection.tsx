@@ -5,14 +5,36 @@ import Image from "next/image";
 
 const TeamSection = () => {
   return (
-    <Box mt="22.6rem" mx="auto" width="112rem">
+    <Box
+      mt={{ mobS: "16.4rem", tabS: "15rem", deskM: "22.6rem" }}
+      mx="auto"
+      width={{ mobS: "90vw", deskM: "112rem" }}
+    >
       <Text as="h2" color="red-20" mb="wm">
         The team
       </Text>
-      <Box row between>
+      <Box
+        display="flex"
+        flexDirection={{ mobS: "column", mobL: "row" }}
+        justifyContent="space-between"
+      >
         {TEAM_MEMBERS.map((member, idx) => (
-          <Box key={idx}>
-            <Box position="relative" height="35rem" width="35rem">
+          <Box key={idx} mb={{ mobS: "wm" }}>
+            <Box
+              position="relative"
+              height={{
+                mobS: "35rem",
+                mobL: "16rem",
+                tabS: "21rem",
+                deskM: "35rem",
+              }}
+              width={{
+                mobS: "35rem",
+                mobL: "16rem",
+                tabS: "21rem",
+                deskM: "35rem",
+              }}
+            >
               <Image src={member.imageUrl} layout="fill" />
             </Box>
             <Box row between mt="mm">
