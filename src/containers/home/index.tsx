@@ -1,5 +1,6 @@
 import Box from "src/components/Box";
 import React, { useContext, useEffect, useState } from "react";
+import Image from "next/image";
 
 import { StatesContext } from "src/components/StatesContext";
 import If from "src/components/If";
@@ -19,6 +20,9 @@ import Banner from "./components/Banner";
 import TeamSection from "./components/TeamSection";
 import SocialMedia from "./components/SocialMedia";
 import Footer from "src/components/Footer";
+import Text from "src/components/Text";
+import CountdownTimer from "src/components/CountdownTimer";
+import ConnectWalletButton from "src/components/ConnectWalletButton";
 
 export const statuses = {
   PRESALE_NEXT: "PRESALE_NEXT",
@@ -101,12 +105,9 @@ const HomeComp = React.memo(() => {
             presalePrice={projectDetails.presalePrice}
             salePrice={projectDetails.publicSalePrice}
             presale={status === statuses.PRESALE_ACTIVE}
-<<<<<<< HEAD
             abi={abi}
             status={status}
             setDisplayModal={setDisplayModal}
-=======
->>>>>>> 86681ab (Revert "Merge branch '29-buy-feature' of https://github.com/chain-labs/smac-fe into 13-gallerypage")
           />
         }
       />
@@ -128,7 +129,7 @@ const HomeComp = React.memo(() => {
         width="100vw"
         between
         overflowY="hidden"
-       >
+      >
         <Box
           id="navbar"
           row
