@@ -1,11 +1,7 @@
 import Box from "src/components/Box";
-import Image from "next/image";
-import Text from "src/components/Text";
 import React, { useContext, useEffect, useState } from "react";
 
-import CountdownTimer from "src/components/CountdownTimer";
 import { StatesContext } from "src/components/StatesContext";
-import ConnectWalletButton from "src/components/ConnectWalletButton";
 import If from "src/components/If";
 import axios from "axios";
 import {
@@ -55,6 +51,7 @@ const HomeComp = React.memo(() => {
   const getContract = async () => {
     const abi = await axios(CONTRACT_ABI_URL);
     console.log(abi);
+    console.log({ CONTRACT_POLYGON_ADDRESS });
 
     setAbi(JSON.parse(abi.data.result));
   };
@@ -89,6 +86,7 @@ const HomeComp = React.memo(() => {
           isPresaleActive,
           isSaleActive,
         });
+        console.log({ presalePrice });
       } catch (error) {
         console.log({ error });
       }
@@ -107,6 +105,9 @@ const HomeComp = React.memo(() => {
             presalePrice={projectDetails.presalePrice}
             salePrice={projectDetails.publicSalePrice}
             presale={status === statuses.PRESALE_ACTIVE}
+            abi={abi}
+            status={status}
+            setDisplayModal={setDisplayModal}
           />
         }
       />

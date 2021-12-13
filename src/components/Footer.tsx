@@ -130,7 +130,7 @@ const Footer = () => {
       </Box>
       <Box mx="auto" center>
         <Text fontSize="1.6rem" fontWeight="thin" textDecoration="underline">
-          Powered by NFTfy
+          Powered by Simplr
         </Text>
       </Box>
     </Box>
