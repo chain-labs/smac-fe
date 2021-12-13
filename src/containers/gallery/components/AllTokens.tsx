@@ -1,15 +1,54 @@
+import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import HorizontalScroll from "react-scroll-horizontal";
 import Box from "src/components/Box";
 import Image from "next/image";
 import useContract from "src/ethereum/useContract";
 import { StatesContext } from "src/components/StatesContext";
+import useCustomContract from "src/ethereum/useCustomContract";
+import Text from "src/components/Text";
 
-
-const AllTokens = ({cid}) => {
-	const [arr, setArr] = useState([...Array(10)].map((_, i) => i + 1));
+const AllTokens = ({ cid, contractAddress }) => {
+	const [arr, setArr] = useState([...Array(18)].map((_, i) => i + 1));
 	const [left, setLeft] = useState<string>("23rem");
 	const state = useContext(StatesContext);
+	const Collection = useCustomContract("Collection", cid, state.provider);
+	const [allTokens, setAllTokens] = useState([]);
+
+	const [projectURI, setProjectURI] = useState<string>("");
+	const [baseId, setBaseId] = useState<string>("");
+
+	useEffect(() => {
+		console.log(Collection);
+		const ownerTokens = [];
+		const getTokens = async () => {
+			try {
+				const projectURI = await Collection.callStatic.projectURI();
+				const tokensCount = await Collection.callStatic.tokensCount(
+				);
+				
+				console.log(parseInt(tokensCount));
+				setAllTokens([...Array(parseInt(tokensCount))].map((_, i) => i + 1));
+				console.log(projectURI);
+				setProjectURI(projectURI);
+			} catch (e) {
+				console.log(e);
+			}
+		};
+		getTokens();
+	}, [cid, Collection]);
+
+	useEffect(() => {
+		getTokenURI();
+	}, [projectURI]);
+
+	const getTokenURI = async () => {
+		if (projectURI != "") {
+			const link = projectURI.slice(7, projectURI.length - 1);
+			const res = await axios.get(`https://ipfs.io/ipfs/${link}/1.json`);
+			console.log(res.data.image.slice(7, res.data.image.length - 5));
+			setBaseId(res.data.image.slice(7, res.data.image.length - 5));
+		}
+	};
 
 	return (
 		<Box top="5rem" ml={left}>
@@ -26,34 +65,19 @@ const AllTokens = ({cid}) => {
 					}
 				`}
 			>
-				<Box display="flex" justifyContent="space-around" mb="2.4rem">
-					{arr.map((_, i) => (
+				<Box display="flex" flexWrap="wrap" width="220rem">
+					{allTokens?.map((_, i) => (
 						<Box mt="3rem">
 							<Box
-								mb="2rem"
 								mr="mxl"
 								position="relative"
-								height={{ mobS: "12rem", tabS:"19.6rem", deskL: "23rem" }}
-								width={{ mobS: "12rem", tabS:"19.6rem", deskL: "23rem" }}
+								height={{ mobS: "12rem", tabS: "19.6rem", deskL: "23rem" }}
+								width={{ mobS: "12rem", tabS: "19.6rem", deskL: "23rem" }}
 							>
-								<Image src={`/static/images/Nft-${arr[i]}.png`} layout="fill" />
-							</Box>
-							<Box
-								mb="2rem"
-								mr="mxl"
-								position="relative"
-								height={{ mobS: "12rem", tabS:"19.6rem", deskL: "23rem" }}
-								width={{ mobS: "12rem", tabS:"19.6rem", deskL: "23rem" }}
-							>
-								<Image src={`/static/images/Nft-${arr[i]}.png`} layout="fill" />
-							</Box>
-							<Box
-								mr="mxl"
-								position="relative"
-								height={{ mobS: "12rem", tabS:"19.6rem", deskL: "23rem" }}
-								width={{ mobS: "12rem", tabS:"19.6rem", deskL: "23rem" }}
-							>
-								<Image src={`/static/images/Nft-${arr[i]}.png`} layout="fill" />
+								<Image
+									src={`https://ipfs.io/ipfs/${baseId}/${allTokens[i]}.png`}
+									layout="fill"
+								/>{" "}
 							</Box>
 						</Box>
 					))}

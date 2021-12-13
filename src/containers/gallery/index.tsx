@@ -35,12 +35,7 @@ const GalleryPageComp = ({ cid }) => {
 		};
 		getAddress();
 	}, [signer, provider]);
-	const child = {
-		width: `25em`,
-		height: `100%`,
-		color: "white",
-		margin: `2rem`,
-	};
+	
 	return (
 		<Box bg="main-black" width="100vw" minHeight="100vh">
 			<Box>
@@ -89,7 +84,7 @@ const GalleryPageComp = ({ cid }) => {
 			<Box>
 				<If
 					condition={allSpaceMen}
-					then={<AllTokens cid={cid} />}
+					then={<AllTokens cid={cid} contractAddress={address}/>}
 					else={<OwnedTokenComp cid={cid} ownerAddress={address}/>}
 				/>
 			</Box>
