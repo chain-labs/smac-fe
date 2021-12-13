@@ -3,6 +3,18 @@ import Box from './Box'
 import Text from './Text'
 import Image from "next/image";
 
+import {
+  DISCORD_INVITE,
+  INSTAGRAM_HANDLE,
+  TWITTER_HANDLE,
+} from "src/containers/home/utils";
+import Hamburger from "images/icons/hamburger.svg";
+import RightArrow from "images/icons/arrow-right.svg";
+import { gsap } from "gsap";
+import Twitter from "images/icons/twitter-fill.svg";
+import Discord from "images/icons/discord-fill.svg";
+import Instagram from "images/icons/instagram-fill.svg";
+
 
 const Navbar = () => {
     return (
