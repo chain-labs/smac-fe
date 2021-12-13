@@ -2,6 +2,7 @@ import React from 'react'
 import Box from './Box'
 import Text from './Text'
 import Image from "next/image";
+
 import {
   DISCORD_INVITE,
   INSTAGRAM_HANDLE,
