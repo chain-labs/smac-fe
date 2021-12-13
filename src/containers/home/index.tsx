@@ -1,11 +1,7 @@
 import Box from "src/components/Box";
-import Image from "next/image";
-import Text from "src/components/Text";
 import React, { useContext, useEffect, useState } from "react";
 
-import CountdownTimer from "src/components/CountdownTimer";
 import { StatesContext } from "src/components/StatesContext";
-import ConnectWalletButton from "src/components/ConnectWalletButton";
 import If from "src/components/If";
 import axios from "axios";
 import {
@@ -111,6 +107,7 @@ const HomeComp = React.memo(() => {
             presale={status === statuses.PRESALE_ACTIVE}
             abi={abi}
             status={status}
+            setDisplayModal={setDisplayModal}
           />
         }
       />

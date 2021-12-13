@@ -12,7 +12,8 @@ import If from "src/components/If";
 
 import Link from "next/link";
 
-import LoadingRing from "src/../public/static/images/icons/loading.svg";
+import LoadingRing from "images/icons/loading.svg";
+import CloseIcon from "images/icons/cross.svg";
 
 const BuyModal = ({
   presalePrice,
@@ -20,12 +21,14 @@ const BuyModal = ({
   presale,
   abi,
   status,
+  setDisplayModal,
 }: {
   presalePrice: any;
   salePrice: any;
   presale?: boolean;
   abi: any;
   status: string;
+  setDisplayModal: (boolean) => void;
 }) => {
   const [numberOfTokens, setNumberOfTokens] = useState(1);
   const [price, setPrice] = useState(null);
@@ -112,15 +115,26 @@ const BuyModal = ({
         minWidth={{ tabS: "70rem", deskL: "85rem" }}
         minHeight={{ tabS: "60rem", deskL: "72rem" }}
       >
+        <Box
+          display={step === 2 ? "none" : "flex"}
+          justifyContent="flex-end"
+          onClick={() => setDisplayModal(false)}
+          mt="mxl"
+          mr="mxl"
+          cursor="pointer"
+        >
+          <CloseIcon />
+        </Box>
         <If
           condition={step === 1}
           then={
-            <Box center column pt={{ tabS: "5rem", deskL: "14rem" }}>
+            <Box center column pt={{ tabS: "wxs", deskL: "wxxl" }}>
               <Text
                 fontSize="3.2rem"
                 fontWeight="semi-bold"
                 color="white-10"
                 textAlign="center"
+                maxWidth={{ tabS: "75%", deskL: "75%" }}
               >
                 Select the number of tokens you want to purchase
               </Text>
@@ -213,7 +227,7 @@ const BuyModal = ({
                 fontFamily="Space Grotesk"
                 fontWeight="medium"
                 color="white-10"
-                mt="wm"
+                mt={{ tabS: "mxxl", deskL: "wxxs" }}
               >
                 Note: You can only hold upto 5 SMAC tokens in one wallet
               </Text>

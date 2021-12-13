@@ -6,12 +6,12 @@ import {
   INSTAGRAM_HANDLE,
   TWITTER_HANDLE,
 } from "src/containers/home/utils";
-import Hamburger from "src/../public/static/images/icons/hamburger.svg";
-import RightArrow from "src/../public/static/images/icons/arrow-right.svg";
+import Hamburger from "images/icons/hamburger.svg";
+import RightArrow from "images/icons/arrow-right.svg";
 import { gsap } from "gsap";
-import Discord from "src/../public/static/images/icons/discord-fill.svg";
-import Twitter from "src/../public/static/images/icons/twitter-fill.svg";
-import Instagram from "src/../public/static/images/icons/instagram-fill.svg";
+import Twitter from "images/icons/twitter-fill.svg";
+import Discord from "images/icons/discord-fill.svg";
+import Instagram from "images/icons/instagram-fill.svg";
 
 const NavLink = ({ href, text }) => {
   return (
