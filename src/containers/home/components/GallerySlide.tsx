@@ -1,6 +1,7 @@
 import Box from "src/components/Box";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { galleryAnimation } from "../animations";
 
 // TODO: make an efficient way to animate the slideshow
 
@@ -9,6 +10,7 @@ const GallerySlide = () => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
+    galleryAnimation();
     const id = setInterval(() => setCount((count) => count + 1), 5000);
 
     return () => {
@@ -27,39 +29,25 @@ const GallerySlide = () => {
       img_wrap.appendChild(img);
       const slider = document.getElementById("slider");
       slider.appendChild(img_wrap);
-      console.log(slider);
     }
   }, [count]);
 
   return (
-    <Box mb="28rem">
+    <Box mb={{ mobS: "wl", tabS: "wxl", deskM: "28rem" }}>
       <Box
         id="slider"
-        mt="22.5rem"
+        mt={{ mobS: "wl", tabS: "wxl", deskM: "22.5rem" }}
         row
         height="auto"
         minWidth="10000rem"
-        css={`
-          transform: translate3d(0, 0, 0);
-          @keyframes slide {
-            0% {
-              transform: translateX(0);
-            }
-            100% {
-              transform: translateX(-200%);
-            }
-          }
-
-          animation: slide 3500s linear infinite;
-        `}
       >
         {arr.map((_, i) => (
           <Box
             key={i * i}
             id={`spaceman-${i}`}
             position="relative"
-            height={{ tabS: "37rem", deskL: "40rem" }}
-            width={{ tabS: "37rem", deskL: "40rem" }}
+            height={{ mobS: "25rem", tabS: "37rem", deskL: "40rem" }}
+            width={{ mobS: "25rem", tabS: "37rem", deskL: "40rem" }}
             mr="mxl"
           >
             <Image
