@@ -3,7 +3,7 @@ import Box, { BoxProps } from "components/Box";
 
 export const fontSizes = {
   h1: { mobS: "3.2rem", tabS: "4.8rem", deskL: "6.4rem" },
-  h2: { mobS: "2.4rem", tabS: "3.2rem", deskL: "4.8rem" },
+  h2: { mobS: "3.2rem",tabS: "4rem", deskL: "4.8rem" },
   s1: { mobS: "2rem", tabS: "2.4rem", deskL: "3.6rem" },
   s2: { mobS: "2rem", tabS: "2rem", deskL: "2.4rem" },
   b1: { mobS: "1.6rem", tabS: "2rem", deskL: "2.4rem" },
@@ -23,7 +23,7 @@ export const fontW = {
   h2: 600,
   s1: 600,
   s2: 600,
-  b1: 300,
+  b1: { mobS: 600, deskM: 300 },
 };
 
 const fontWeights = {
