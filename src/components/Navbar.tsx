@@ -100,9 +100,16 @@ const Navbar = () => {
         left="0"
         width="100vw"
         between
+<<<<<<< HEAD
         overflow="hidden"
         mt={{ mobS: "mxxxl", deskM: "wxxs" }}
       >
+=======
+        mb="6.4rem"
+        // overflowY="hidden"
+        backgroundColor="main-black"
+       >
+>>>>>>> 0cfe413 (solving scrollbar issue and making images dynamic)
         <Box
           id="navbar"
           row
