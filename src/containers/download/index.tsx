@@ -21,6 +21,8 @@ const DownloadNftComp = ({ abi }) => {
 	const [baseId, setBaseId] = useState<string>("");
 	const [ownerTokens, setOwnerTokens] = useState([]);
 	const SMAC = useContract(CONTRACT_POLYGON_ADDRESS, abi, state.provider);
+	const [downloading, setDownloading]= useState<boolean>(false)
+
 
 	useListeners(provider, setProvider, setSigner);
 
@@ -63,6 +65,7 @@ const DownloadNftComp = ({ abi }) => {
 	}, [SMAC, ownerAddress]);
 
 	const downloadAll = async () => {
+		setDownloading(true)
 		if (process.browser) {
 			baseId &&
 				ownerTokens?.forEach((c) => {
@@ -80,6 +83,7 @@ const DownloadNftComp = ({ abi }) => {
 							document.body.appendChild(a);
 							a.click();
 							window.URL.revokeObjectURL(url);
+							setDownloading(false)
 						})
 						.catch(() => alert("An error sorry"));
 				});
@@ -126,7 +130,7 @@ const DownloadNftComp = ({ abi }) => {
 					}}
 				>
 					<Text as="b1" color="white-10">
-						Download All
+						{downloading? "Downloading":"Download All"}
 					</Text>
 				</Box>
 				<Box display="flex" flexWrap="wrap" width="90%" mt="7.1rem">
