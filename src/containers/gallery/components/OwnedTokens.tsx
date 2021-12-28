@@ -9,7 +9,6 @@ import { StatesContext } from "src/components/StatesContext";
 import Text from "src/components/Text";
 
 const OwnedTokenComp = ({ abi, ownerAddress }) => {
-	const [arr, setArr] = useState([...Array(6)].map((_, i) => i + 1));
 	const state = useContext(StatesContext);
 	const SMAC = useContract(CONTRACT_POLYGON_ADDRESS, abi, state.provider);
 	const [ownerTokens, setOwnerTokens] = useState([]);
@@ -51,7 +50,7 @@ const OwnedTokenComp = ({ abi, ownerAddress }) => {
 	}
 
 	return (
-		<Box display="flex" ml="23rem">
+		<Box display="flex" ml="23rem" flexWrap="wrap">
 			{ baseId && ownerTokens?.map((_, i) => (
 				<Box mt="3rem" key={i*i}>
 					<Box

@@ -4,12 +4,10 @@ import Box from "src/components/Box";
 import Image from "next/image";
 import useContract from "src/ethereum/useContract";
 import { StatesContext } from "src/components/StatesContext";
-import Text from "src/components/Text";
 import { CONTRACT_POLYGON_ADDRESS } from "src/utils/constants";
 
 
 const AllTokens = ({ abi }) => {
-	const [arr, setArr] = useState([...Array(18)].map((_, i) => i + 1));
 	const [left, setLeft] = useState<string>("23rem");
 	const state = useContext(StatesContext);
 	const SMAC = useContract(CONTRACT_POLYGON_ADDRESS, abi, state.provider);
@@ -52,7 +50,7 @@ const AllTokens = ({ abi }) => {
 	};
 
 	return (
-		<Box top="5rem" ml={left}>
+		<Box top="5rem" ml={{mobS:"0",tabS:`${left}`}} >
 			<Box
 				id="scroll"
 				overflowX="scroll"
@@ -66,7 +64,7 @@ const AllTokens = ({ abi }) => {
 					}
 				`}
 			>
-				<Box display="flex" flexWrap="wrap" width="220rem">
+				<Box display="flex" flexWrap="wrap" width={{mobS:"120%",tabS:"210rem"}}>
 					{allTokens?.map((_, i) => (
 						<Box mt="3rem">
 							<Box

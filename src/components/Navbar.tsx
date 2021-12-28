@@ -49,7 +49,7 @@ const Navbar = () => {
   };
 
   return (
-    <Box overflowX="hidden">
+    <Box>
       <Box
         id="drawer"
         position="fixed"
@@ -60,7 +60,7 @@ const Navbar = () => {
         zIndex={100}
         display="none"
         pl={{ mobS: "mxxxl", tabS: "wxxs" }}
-      >
+       >
         <Box
           width={{ mobS: "32px", tabS: "64px" }}
           bg="none"
@@ -95,20 +95,21 @@ const Navbar = () => {
         </Box>
       </Box>
       <Box
-        position="absolute"
-        top="0"
+        position="relative"
+        // top="0"
         left="0"
         width="100vw"
         between
         overflow="hidden"
         mt={{ mobS: "mxxxl", deskM: "wxxs" }}
+        justifyContent={{mobS:"center",tabS:"flex-start"}}
       >
         <Box
           id="navbar"
           row
           between
-          mx="auto"
-          width={{ mobS: "90vw", deskM: "116rem" }}
+          mx={{mobS:"0",tabS:"14rem",deskL:"21rem"}}
+          width={{ mobS: "90vw", tabS: "146rem" }}
         >
           <Box
             height={{ mobS: "3.6rem", tabS: "6rem", deskM: "7.2rem" }}
