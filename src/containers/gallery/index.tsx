@@ -17,6 +17,7 @@ import useListeners from "src/ethereum/useListeners";
 import { StatesContext } from "../../components/StatesContext";
 import useEthers from "src/ethereum/useEthers";
 import useContract from "src/ethereum/useContract";
+import AllTokens from "./components/AllTokens";
 
 
 const GalleryPageComp = ()=> {
@@ -62,7 +63,7 @@ const GalleryPageComp = ()=> {
 	
 
 	return (
-		<Box bg="main-black" width="100vw" minHeight="100vh">
+		<Box bg="black-10" width="100vw" minHeight="100vh">
 			<Box>
 				<Navbar />
 			</Box>
@@ -107,11 +108,12 @@ const GalleryPageComp = ()=> {
 				</Text>
 			</Box>
 			<Box>
-				<If
+				{/* <If
 					condition={allSpaceMen}
-					then={<OwnedTokenComp abi={abi} />}
-					else={<OwnedTokenComp abi={abi} />}
-				/>
+					then={<AllTokens abi={abi} />}
+					else={<OwnedTokenComp abi={abi} ownerAddress={ownerAddress} />}
+				/> */}
+				<OwnedTokenComp abi={abi} ownerAddress={ownerAddress} />
 			</Box>
 		</Box>
 	);

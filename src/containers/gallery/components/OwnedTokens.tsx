@@ -8,12 +8,11 @@ import { CONTRACT_POLYGON_ADDRESS } from "src/utils/constants";
 import { StatesContext } from "src/components/StatesContext";
 import Text from "src/components/Text";
 
-const OwnedTokenComp = ({ abi }) => {
+const OwnedTokenComp = ({ abi, ownerAddress }) => {
 	const [arr, setArr] = useState([...Array(6)].map((_, i) => i + 1));
 	const state = useContext(StatesContext);
 	const SMAC = useContract(CONTRACT_POLYGON_ADDRESS, abi, state.provider);
 	const [ownerTokens, setOwnerTokens] = useState([]);
-
 	const [projectURI, setProjectURI] = useState<string>("")
 	const [baseId, setBaseId] = useState<string>("")
 
@@ -23,7 +22,7 @@ const OwnedTokenComp = ({ abi }) => {
 		const getTokens = async () => {
 			try {
 				const projectURI = await SMAC.callStatic.projectURI();
-				const myTokens = await SMAC.callStatic.getAllTokensOfOwner()
+				const myTokens = await SMAC.callStatic.getAllTokensOfOwner(ownerAddress)
 				myTokens.map(c=>{
 					ownerTokens.push(parseInt(c))
 				})
