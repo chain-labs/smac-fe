@@ -11,6 +11,7 @@ import { DISCORD_INVITE } from "../utils";
 
 const Hero = ({ status, setStatus, projectDetails, setDisplayModal }) => {
   const state = useContext(StatesContext);
+  
   return (
     <Box
       column

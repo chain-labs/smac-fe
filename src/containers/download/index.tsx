@@ -8,7 +8,7 @@ import useListeners from "src/ethereum/useListeners";
 import { StatesContext } from "../../components/StatesContext";
 import useEthers from "src/ethereum/useEthers";
 import useContract from "src/ethereum/useContract";
-import { CONTRACT_POLYGON_ADDRESS } from "src/utils/constants";
+import { CONTRACT_ADDRESS } from "src/utils/constants";
 import axios from "axios";
 
 const DownloadNftComp = ({ abi }) => {
@@ -20,9 +20,18 @@ const DownloadNftComp = ({ abi }) => {
 	const [projectURI, setProjectURI] = useState<string>("");
 	const [baseId, setBaseId] = useState<string>("");
 	const [ownerTokens, setOwnerTokens] = useState([]);
-	const SMAC = useContract(CONTRACT_POLYGON_ADDRESS, abi, state.provider);
+	const SMAC = useContract(CONTRACT_ADDRESS, abi, state.provider);
 	const [downloading, setDownloading]= useState<boolean>(false)
 
+  const toDataURL = (url) => {
+    return fetch(url)
+      .then((response) => {
+        return response.blob();
+      })
+      .then((blob) => {
+        return URL.createObjectURL(blob);
+      });
+  };
 
 	useListeners(provider, setProvider, setSigner);
 

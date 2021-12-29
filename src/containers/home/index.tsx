@@ -4,10 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { StatesContext } from "src/components/StatesContext";
 import If from "src/components/If";
 import axios from "axios";
-import {
-  CONTRACT_ABI_URL,
-  CONTRACT_POLYGON_ADDRESS,
-} from "src/utils/constants";
+import { CONTRACT_ABI_URL, CONTRACT_ADDRESS } from "src/utils/constants";
 
 import { ROADMAP, POST_SALE_ROADMAP, DISCORD_INVITE } from "./utils";
 import useContract from "src/ethereum/useContract";
@@ -44,14 +41,14 @@ const HomeComp = React.memo(() => {
 
   const [abi, setAbi] = useState();
 
-  const SMAC = useContract(CONTRACT_POLYGON_ADDRESS, abi, state.provider);
+  const SMAC = useContract(CONTRACT_ADDRESS, abi, state.provider);
 
   const [status, setStatus] = useState(statuses.SALE_ACTIVE);
 
   const getContract = async () => {
     const abi = await axios(CONTRACT_ABI_URL);
     console.log(abi);
-    console.log({ CONTRACT_POLYGON_ADDRESS });
+    console.log({ CONTRACT_ADDRESS });
 
     setAbi(JSON.parse(abi.data.result));
   };
@@ -76,6 +73,12 @@ const HomeComp = React.memo(() => {
           setStatus(statuses.PRESALE_ACTIVE);
         } else if (isSaleActive) {
           setStatus(statuses.SALE_ACTIVE);
+        } else if (presaleTime > Date.now()) {
+          setStatus(statuses.PRESALE_NEXT);
+        } else if (saleTime > Date.now()) {
+          setStatus(statuses.SALE_NEXT);
+        } else {
+          setStatus(statuses.SOLDOUT);
         }
 
         setProjectDetails({

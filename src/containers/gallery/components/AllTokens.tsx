@@ -4,13 +4,13 @@ import Box from "src/components/Box";
 import Image from "next/image";
 import useContract from "src/ethereum/useContract";
 import { StatesContext } from "src/components/StatesContext";
-import { CONTRACT_POLYGON_ADDRESS } from "src/utils/constants";
+import { CONTRACT_ADDRESS } from "src/utils/constants";
 
 
 const AllTokens = ({ abi }) => {
 	const [left, setLeft] = useState<string>("23rem");
 	const state = useContext(StatesContext);
-	const SMAC = useContract(CONTRACT_POLYGON_ADDRESS, abi, state.provider);
+	const SMAC = useContract(CONTRACT_ADDRESS, abi, state.provider);
 	const [allTokens, setAllTokens] = useState([]);
 
 	const [projectURI, setProjectURI] = useState<string>("");

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import DownloadNftComp from 'src/containers/download'
 import {
 	CONTRACT_ABI_URL,
-	CONTRACT_POLYGON_ADDRESS,
+	CONTRACT_ADDRESS,
   } from "src/utils/constants";
   import axios from "axios";
 import Box from 'src/components/Box';
@@ -12,7 +12,7 @@ const index = () => {
     const getContract = async () => {
         const abi = await axios(CONTRACT_ABI_URL);
         console.log(abi);
-        console.log({ CONTRACT_POLYGON_ADDRESS });
+        console.log({ CONTRACT_ADDRESS });
     
         setAbi(JSON.parse(abi.data.result));
         console.log(JSON.parse(abi.data.result))

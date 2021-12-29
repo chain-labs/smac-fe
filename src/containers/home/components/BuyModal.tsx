@@ -6,7 +6,7 @@ import Text from "src/components/Text";
 import theme from "src/styleguide/theme";
 import { BigNumber } from "ethers";
 import useContract from "src/ethereum/useContract";
-import { CONTRACT_POLYGON_ADDRESS } from "src/utils/constants";
+import { CONTRACT_ADDRESS, getUnit } from "src/utils/constants";
 import { StatesContext } from "src/components/StatesContext";
 import If from "src/components/If";
 
@@ -34,10 +34,11 @@ const BuyModal = ({
   const [price, setPrice] = useState(null);
   const [total, setTotal] = useState(null);
   const [step, setStep] = useState(1);
+  const [unit, setUnit] = useState(getUnit());
 
   const state = useContext(StatesContext);
 
-  const SMAC = useContract(CONTRACT_POLYGON_ADDRESS, abi, state.provider);
+  const SMAC = useContract(CONTRACT_ADDRESS, abi, state.provider);
 
   const handleChange = (event) => {
     setNumberOfTokens(event.target.value);
@@ -53,14 +54,14 @@ const BuyModal = ({
   useEffect(() => {
     if (salePrice && presalePrice) {
       if (presale) {
-        const presalePriceInMatic = ethers.utils.formatUnits(presalePrice, 18);
+        const presalePriceBN = ethers.utils.formatUnits(presalePrice, 18);
         const totalPrice = BigNumber.from(numberOfTokens).mul(presalePrice);
-        setPrice(presalePriceInMatic);
+        setPrice(presalePriceBN);
         setTotal(totalPrice);
       } else {
-        const salePriceInMatic = ethers.utils.formatUnits(salePrice, 18);
+        const salePriceInBN = ethers.utils.formatUnits(salePrice, 18);
         const totalPrice = BigNumber.from(numberOfTokens).mul(salePrice);
-        setPrice(salePriceInMatic);
+        setPrice(salePriceInBN);
         setTotal(totalPrice);
       }
     }
@@ -199,11 +200,11 @@ const BuyModal = ({
               </Box>
               <Box>
                 <Text as="s2" color="white-10" mr="mxxxl">
-                  Price: {price} MATIC
+                  Price: {price} {getUnit()}
                 </Text>
                 <Text as="s2" color="white-10">
                   Total: {total ? ethers.utils.formatUnits(total, 18) : "0"}{" "}
-                  MATIC
+                  {getUnit()}
                 </Text>
               </Box>
               <Box
