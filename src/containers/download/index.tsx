@@ -10,6 +10,7 @@ import useEthers from "src/ethereum/useEthers";
 import useContract from "src/ethereum/useContract";
 import { CONTRACT_ADDRESS } from "src/utils/constants";
 import axios from "axios";
+import { useRouter } from "next/dist/client/router";
 
 const DownloadNftComp = ({ abi }) => {
 	const [arr, setArr] = useState([...Array(5)].map((_, i) => i + 1));
@@ -21,17 +22,10 @@ const DownloadNftComp = ({ abi }) => {
 	const [baseId, setBaseId] = useState<string>("");
 	const [ownerTokens, setOwnerTokens] = useState([]);
 	const SMAC = useContract(CONTRACT_ADDRESS, abi, state.provider);
-	const [downloading, setDownloading]= useState<boolean>(false)
-
-  const toDataURL = (url) => {
-    return fetch(url)
-      .then((response) => {
-        return response.blob();
-      })
-      .then((blob) => {
-        return URL.createObjectURL(blob);
-      });
-  };
+	const [downloading, setDownloading] = useState<boolean>(false);
+	const router = useRouter();
+	const [loadingURI, setLoadingURI] = useState<string>("");
+	const [format, setFormat] = useState<string>("");
 
 	useListeners(provider, setProvider, setSigner);
 
@@ -56,6 +50,7 @@ const DownloadNftComp = ({ abi }) => {
 		const getTokens = async () => {
 			try {
 				const projectURI = await SMAC.callStatic.projectURI();
+				const loadingURI = await SMAC.callStatic.loadingURI();
 				const myTokens = await SMAC.callStatic.getAllTokensOfOwner(
 					ownerAddress
 				);
@@ -66,6 +61,7 @@ const DownloadNftComp = ({ abi }) => {
 				setOwnerTokens(ownerTokens);
 				console.log(projectURI);
 				setProjectURI(projectURI);
+				setLoadingURI(loadingURI);
 			} catch (e) {
 				console.log(e);
 			}
@@ -74,11 +70,11 @@ const DownloadNftComp = ({ abi }) => {
 	}, [SMAC, ownerAddress]);
 
 	const downloadAll = async () => {
-		setDownloading(true)
+		setDownloading(true);
 		if (process.browser) {
 			baseId &&
 				ownerTokens?.forEach((c) => {
-					const url = `https://ipfs.io/ipfs/${baseId}${c}.png`;
+					const url = `https://nftfy.mypinata.cloud/ipfs/${baseId}${c}.png`;
 					const name = `Nft-${c}`;
 					fetch(url)
 						.then((resp) => resp.blob())
@@ -92,7 +88,7 @@ const DownloadNftComp = ({ abi }) => {
 							document.body.appendChild(a);
 							a.click();
 							window.URL.revokeObjectURL(url);
-							setDownloading(false)
+							setDownloading(false);
 						})
 						.catch(() => alert("An error sorry"));
 				});
@@ -104,17 +100,18 @@ const DownloadNftComp = ({ abi }) => {
 	}, [projectURI]);
 
 	const getTokenURI = async () => {
-		if (projectURI != "") {
-			const link = projectURI.slice(7, projectURI.length - 1);
-			const res = await axios.get(`https://ipfs.io/ipfs/${link}/1.json`);
-			console.log(res.data.image.slice(7, res.data.image.length - 5));
+		if (SMAC) {
+			const tokenURI = await SMAC.callStatic.tokenURI(ownerTokens[0]);
+			const link = tokenURI.slice(7);
+			const res = await axios.get(`https://nftfy.mypinata.cloud/ipfs/${link}`);
 			setBaseId(res.data.image.slice(7, res.data.image.length - 5));
+			setFormat(res.data.image.slice(-3));
 		}
 	};
 
 	return (
 		<Box bg="black-10" minHeight="100vh">
-			<Box mb="9.8rem">
+			<Box mb="3.8rem">
 				<Navbar />
 			</Box>
 			<Box ml={{ tabS: "14rem", deskL: "21rem" }}>
@@ -123,25 +120,48 @@ const DownloadNftComp = ({ abi }) => {
 						Welcome to Space Man Astro Club!{" "}
 					</Text>
 					<Text as="b1" color="white-10">
-						Here are your tokens :
+						{ownerTokens.length != 0
+							? projectURI != ""
+								? "Here are your tokens:"
+								: "Tokens Will be revealed soon"
+							: "You have not bought any spaceman click on the button below to buy spacemen"}
 					</Text>
 				</Box>
-				<Box
-					as="button"
-					px="4.7rem"
-					py="2.3rem"
-					bg="red-10"
-					borderRadius="8px"
-					border="none"
-					cursor="pointer"
-					onClick={() => {
-						downloadAll();
-					}}
-				>
-					<Text as="b1" color="white-10">
-						{downloading? "Downloading":"Download All"}
-					</Text>
-				</Box>
+				{ownerTokens.length != 0 ? (
+					<Box
+						as="button"
+						px="4.7rem"
+						py="2.3rem"
+						bg="red-10"
+						borderRadius="8px"
+						border="none"
+						cursor="pointer"
+						onClick={() => {
+							downloadAll();
+						}}
+					>
+						<Text as="b1" color="white-10">
+							{downloading ? "Downloading" : "Download All"}
+						</Text>
+					</Box>
+				) : (
+					<Box
+						as="button"
+						px="4.7rem"
+						py="2.3rem"
+						bg="red-10"
+						borderRadius="8px"
+						border="none"
+						cursor="pointer"
+						onClick={() => {
+							router.push("/");
+						}}
+					>
+						<Text as="b1" color="white-10">
+							Buy Spacemen
+						</Text>
+					</Box>
+				)}
 				<Box display="flex" flexWrap="wrap" width="90%" mt="7.1rem">
 					{baseId &&
 						ownerTokens?.map((_, i) => (
@@ -150,11 +170,11 @@ const DownloadNftComp = ({ abi }) => {
 								mb="2.4rem"
 								mr="mxl"
 								position="relative"
-								height={{ tabS: "56.8rem", deskL: "60.6rem" }}
-								width={{ tabS: "56.8rem", deskL: "60.6rem" }}
+								height={{ tabS: "35.8rem", deskL: "40.6rem" }}
+								width={{ tabS: "35.8rem", deskL: "40.6rem" }}
 							>
 								<Image
-									src={`https://ipfs.io/ipfs/${baseId}${ownerTokens[i]}.png`}
+									src={`https://nftfy.mypinata.cloud/ipfs/${baseId}${ownerTokens[i]}.${format}`}
 									layout="fill"
 								/>
 							</Box>

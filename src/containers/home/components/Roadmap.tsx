@@ -9,6 +9,7 @@ const Roadmap = ({ title, roadmap }: { title: string; roadmap: string[] }) => {
       width={{ mobS: "90vw", deskM: "116rem" }}
       px="ms"
       overflowX="visible"
+      id="roadmap"
     >
       <Text as="h2" color="red-20" mb="mxl">
         {title}

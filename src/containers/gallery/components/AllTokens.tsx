@@ -12,7 +12,7 @@ const AllTokens = ({ abi }) => {
 	const state = useContext(StatesContext);
 	const SMAC = useContract(CONTRACT_ADDRESS, abi, state.provider);
 	const [allTokens, setAllTokens] = useState([]);
-
+	const [format, setFormat] = useState<string>("")
 	const [projectURI, setProjectURI] = useState<string>("");
 	const [baseId, setBaseId] = useState<string>("");
 
@@ -41,11 +41,12 @@ const AllTokens = ({ abi }) => {
 	}, [projectURI]);
 
 	const getTokenURI = async () => {
-		if (projectURI != "") {
-			const link = projectURI.slice(7, projectURI.length - 1);
-			const res = await axios.get(`https://ipfs.io/ipfs/${link}/1.json`);
-			console.log(res.data.image.slice(7, res.data.image.length - 5));
+		if (SMAC) {
+			const tokenURI = await SMAC.callStatic.tokenURI(allTokens[0]);
+			const link = tokenURI.slice(7);
+			const res = await axios.get(`https://nftfy.mypinata.cloud/ipfs/${link}`);
 			setBaseId(res.data.image.slice(7, res.data.image.length - 5));
+			setFormat(res.data.image.slice(-3));
 		}
 	};
 
@@ -74,9 +75,9 @@ const AllTokens = ({ abi }) => {
 								width={{ mobS: "12rem", tabS: "19.6rem", deskL: "23rem" }}
 							>
 								<Image
-									src={`https://ipfs.io/ipfs/${baseId}/${allTokens[i]}.png`}
-									layout="fill"
-								/>{" "}
+								src={`https://nftfy.mypinata.cloud/ipfs/${baseId}${allTokens[i]}.${format}`}
+								layout="fill"
+							/>{" "}
 							</Box>
 						</Box>
 					))}

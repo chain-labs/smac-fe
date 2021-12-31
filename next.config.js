@@ -32,7 +32,7 @@ const withPlugins = require('next-compose-plugins');
 
 const nextConfig = {
     images: {
-        domains: ['ipfs.io'],
+        domains: ['nftfy.mypinata.cloud'],
     },
 }
 module.exports = withPlugins([

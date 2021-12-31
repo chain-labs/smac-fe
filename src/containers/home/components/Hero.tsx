@@ -18,7 +18,7 @@ const Hero = ({ status, setStatus, projectDetails, setDisplayModal }) => {
       center
       minWidth="70%"
       zIndex={3}
-      mt={{ mobS: "16rem", deskM: "25rem" }}
+      mt={{ mobS: "16rem", deskM: "14.9rem" }}
     >
       <Text
         id="headline"

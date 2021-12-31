@@ -12,6 +12,7 @@ import { gsap } from "gsap";
 import Twitter from "images/icons/twitter-fill.svg";
 import Discord from "images/icons/discord-fill.svg";
 import Instagram from "images/icons/instagram-fill.svg";
+import { useRouter } from "next/dist/client/router";
 
 const NavLink = ({ href, text }) => {
   return (
@@ -28,6 +29,8 @@ const NavLink = ({ href, text }) => {
 };
 
 const Navbar = () => {
+  const router = useRouter()
+
   const openDrawer = () => {
     gsap.fromTo(
       "#drawer",
@@ -96,7 +99,7 @@ const Navbar = () => {
       </Box>
       <Box
         position="relative"
-        // top="0"
+        top="0"
         left="0"
         width="100vw"
         between
@@ -120,16 +123,16 @@ const Navbar = () => {
             <Image src="/static/images/brand.svg" layout="fill" quality="100" />
           </Box>
           <Box row display={{ mobS: "none", tabL: "flex" }}>
-            <Text fontSize="2rem" fontWeight="medium" color="white-10" mr="wm">
+            <Text fontSize="2rem" fontWeight="medium" color="white-10" cursor="pointer" mr="wm" onClick={()=>router.push("/#about")}>
               About
             </Text>
-            <Text fontSize="2rem" fontWeight="medium" color="white-10" mr="wm">
+            <Text fontSize="2rem" fontWeight="medium" color="white-10" cursor="pointer" mr="wm" onClick={()=>router.push("/#roadmap")}>
               Roadmap
             </Text>
-            <Text fontSize="2rem" fontWeight="medium" color="white-10" mr="wm">
+            <Text fontSize="2rem" fontWeight="medium" color="white-10" cursor="pointer" mr="wm" onClick={()=>router.push("/#team")}>
               Team
             </Text>
-            <Text fontSize="2rem" fontWeight="medium" color="white-10">
+            <Text fontSize="2rem" fontWeight="medium" color="white-10" cursor="pointer" onClick={()=>router.push("/gallery")} >
               Gallery
             </Text>
           </Box>

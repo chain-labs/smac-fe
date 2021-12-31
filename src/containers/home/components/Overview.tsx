@@ -10,6 +10,7 @@ const Overview = () => {
       mx="auto"
       maxWidth={{ mobS: "90vw", tabS: "95vw", deskM: "116rem" }}
       center
+      id="about"
     >
       <Box column>
         <Text
