@@ -1,241 +1,165 @@
 import Box from "src/components/Box";
-import Image from "next/image";
-import Text from "src/components/Text";
-import { useEffect } from "react";
-import theme from "src/styleguide/theme";
+import React, { useContext, useEffect, useState } from "react";
 
-import { introAnimation, scrollBannerAnimation } from "./animations";
+import { StatesContext } from "src/components/StatesContext";
+import If from "src/components/If";
+import axios from "axios";
+import { CONTRACT_ABI_URL, CONTRACT_ADDRESS } from "src/utils/constants";
 
-const HomeComp = () => {
+import { ROADMAP, POST_SALE_ROADMAP, DISCORD_INVITE } from "./utils";
+import useContract from "src/ethereum/useContract";
+import BuyModal from "./components/BuyModal";
+import Overview from "./components/Overview";
+import GallerySlide from "./components/GallerySlide";
+import Roadmap from "./components/Roadmap";
+import Banner from "./components/Banner";
+import TeamSection from "./components/TeamSection";
+import SocialMedia from "./components/SocialMedia";
+import Footer from "src/components/Footer";
+import Navbar from "src/components/Navbar";
+import Hero from "./components/Hero";
+
+export const statuses = {
+  PRESALE_NEXT: "PRESALE_NEXT",
+  PRESALE_ACTIVE: "PRESALE_ACTIVE",
+  SALE_NEXT: "SALE_NEXT",
+  SALE_ACTIVE: "SALE_ACTIVE",
+  SOLDOUT: "SOLDOUT",
+};
+
+const HomeComp = React.memo(() => {
+  const state = useContext(StatesContext);
+  const [projectDetails, setProjectDetails] = useState({
+    presaleTime: "",
+    saleTime: "",
+    presalePrice: null,
+    publicSalePrice: null,
+    isPresaleActive: false,
+    isSaleActive: false,
+  });
+  const [displayModal, setDisplayModal] = useState(false);
+
+  const [abi, setAbi] = useState();
+
+  const SMAC = useContract(CONTRACT_ADDRESS, abi, state.provider);
+
+  const [status, setStatus] = useState(statuses.SALE_ACTIVE);
+
+  const getContract = async () => {
+    const abi = await axios(CONTRACT_ABI_URL);
+    setAbi(JSON.parse(abi.data.result));
+  };
+
   useEffect(() => {
-    document.querySelector(".banner").addEventListener("load", () => {
-      introAnimation();
-    });
-    scrollBannerAnimation();
+    getContract();
   }, []);
 
+  useEffect(() => {
+    const getDetails = async () => {
+      try {
+        const presaleTime = await SMAC?.callStatic?.presaleStartTime();
+        const saleTime = await SMAC?.callStatic?.publicSaleStartTime();
+        const presalePrice = await SMAC?.callStatic?.presalePrice();
+        const publicSalePrice = await SMAC?.callStatic?.price();
+        const isPresaleActive = await SMAC?.callStatic?.isPresaleActive();
+        const isSaleActive = await SMAC?.callStatic?.isSaleActive();
+
+        if (isPresaleActive) {
+          setStatus(statuses.PRESALE_ACTIVE);
+        } else if (isSaleActive) {
+          setStatus(statuses.SALE_ACTIVE);
+        } else if (presaleTime > Date.now()) {
+          setStatus(statuses.PRESALE_NEXT);
+        } else if (saleTime > Date.now()) {
+          setStatus(statuses.SALE_NEXT);
+        } else {
+          setStatus(statuses.SOLDOUT);
+        }
+
+        setProjectDetails({
+          presaleTime: presaleTime.toString(),
+          saleTime: saleTime.toString(),
+          presalePrice,
+          publicSalePrice,
+          isPresaleActive,
+          isSaleActive,
+        });
+      } catch (error) {
+        console.log({ error });
+      }
+    };
+    if (SMAC) {
+      getDetails();
+    }
+  }, [SMAC]);
+
   return (
-    <Box>
+    <Box overflowX="hidden">
+      <If
+        condition={displayModal}
+        then={
+          <BuyModal
+            presalePrice={projectDetails.presalePrice}
+            salePrice={projectDetails.publicSalePrice}
+            presale={status === statuses.PRESALE_ACTIVE}
+            abi={abi}
+            status={status}
+            setDisplayModal={setDisplayModal}
+          />
+        }
+      />
       {/* <-------------BANNER BACKGROUND----------------> */}
       <Box
         height="100vh"
         width="100vw"
-        bg="blue-10"
+        bg="black-10"
         zIndex={10}
         className="overlay"
         position="absolute"
         top="0"
       ></Box>
-      <Box
-        width="100vw"
-        height="100vh"
-        position="fixed"
-        top={{ mobS: 0, tabS: -10 }}
-        zIndex={-1}
-        className="banner"
-      >
-        <Image
-          src="/static/images/banner.webp"
-          alt="banner"
-          height="9"
-          width="16"
-          layout="responsive"
-          quality={1}
-          priority
-          onLoadingComplete={introAnimation}
-        ></Image>
-        <Box
-          bg="black-10"
-          opacity="50%"
-          height="120vh"
-          width="100vw"
-          position="absolute"
-          top="0"
-          left="0"
-        ></Box>
-      </Box>
-      <Box
-        position="absolute"
-        top="10"
-        left="50%"
-        transform="translateX(-50%)"
-        row
-        center
-      >
-        <Box row>
-          <Text fontSize="2rem" color="white-10" mr="4rem">
-            About
-          </Text>
-          <Text fontSize="2rem" color="white-10" mr="4rem">
-            Gallery
-          </Text>
-          <Text fontSize="2rem" color="white-10" mr="4rem">
-            Roadmap
-          </Text>
-        </Box>
-        <Box
-          borderRadius="50%"
-          height="8rem"
-          width="8rem"
-          position="relative"
-          overflow="hidden"
-        >
-          <Image src="/static/images/logo.jpeg" layout="fill" />
-        </Box>
-        <Box row ml="4rem">
-          <Text fontSize="2rem" color="white-10" mr="4rem">
-            About
-          </Text>
-          <Text fontSize="2rem" color="white-10" mr="4rem">
-            Gallery
-          </Text>
-          <Text fontSize="2rem" color="white-10">
-            Roadmap
-          </Text>
-        </Box>
-      </Box>
-      <Box
-        position="absolute"
-        top="30%"
-        left="50%"
-        transform="translateX(-50%)"
-        column
-        center
-        minWidth="70%"
-        zIndex={3}
-      >
-        <Text
-          id="headline"
-          color="white"
-          fontSize={{ mobS: "3.6rem", tabS: "7.2rem" }}
-          fontWeight="extra-bold"
-          mb="20rem"
-          textTransform="uppercase"
-          textAlign="center"
-        >
-          Space Man Astro Club
-        </Text>
-        <Box
-          bg="yellow-10"
-          zIndex={2}
-          px="4.8rem"
-          py="2rem"
-          borderRadius="4px"
-          cursor="pointer"
-          className="cta-btn"
-        >
-          <Text fontSize="2rem" color="black-20" fontWeight="extra-bold">
-            Let's Begin
-          </Text>
-        </Box>
-      </Box>
-      {/* <-------------BANNER BACKGROUND ENDS----------------> */}
-
-      {/* <------------- WEBSITE BODY STARTS HERE ----------------> */}
+      <Banner />
+      <Navbar />
+      <Hero
+        status={status}
+        setStatus={setStatus}
+        projectDetails={projectDetails}
+        setDisplayModal={setDisplayModal}
+      />
       <Box
         color="white"
         className="body"
-        bg="blue-10"
-        mt={{ mobS: "15rem", deskM: "60rem", deskL: "80rem" }}
+        bg="black-10"
+        mt={{ mobS: "2rem", deskM: "2rem", deskL: "2rem" }}
         css={`
-          clip-path: polygon(0% 0%, 50% 7%, 100% 0%, 100% 100%, 0% 100%);
-          @media only screen and (max-width: ${theme.breakpoints.tabS}) {
-            clip-path: polygon(0% 0%, 50% 4%, 100% 0%, 100% 100%, 0% 100%);
-          }
+          clip-path: polygon(0% 0%, 50% 1%, 100% 0%, 100% 100%, 0% 100%);
         `}
+        position="relative"
       >
-        <Box display="flex" pt="20rem" center pl="20rem" pr="15rem">
-          <Box mt="2rem">
-            <Text
-              fontSize="4.8rem"
-              color="red-10"
-              mb="0"
-              fontWeight="extra-bold"
-            >
-              10,000 <br />
-              Generative Characters
-            </Text>
-            <Text
-              fontSize="4.8rem"
-              color="white-10"
-              mt="0"
-              mb="4.8rem"
-              fontWeight="extra-bold"
-            >
-              ready to tell a story.
-            </Text>
-            <Text
-              fontSize="2rem"
-              color="grey"
-              mb="4.8rem"
-              maxWidth="50rem"
-              fontWeight="thin"
-            >
-              SMAC is a collection of 10,000 Generative pieces of art with
-              references from an upcoming comic book. The collection focuses on
-              characters and their stylised appearance as well as their part in
-              the story arc based on the SMAC comic book.
-            </Text>
-          </Box>
-          <Box ml="8rem">
-            <Image
-              src="/static/images/spaceman-1.png"
-              height="490"
-              width="490"
-              quality="75"
-            />
-          </Box>
-        </Box>
-
-        {/* <------------------ REPETITVE CONTENT TO BE DELETED LATER ------------------> */}
-
-        <Box display="flex" pt="20rem" center pl="20rem" pr="15rem">
-          <Box mt="2rem">
-            <Text
-              fontSize="4.8rem"
-              color="yellow-10"
-              mb="0"
-              fontWeight="extra-bold"
-            >
-              10,000 <br />
-              Generative Characters
-            </Text>
-            <Text
-              fontSize="4.8rem"
-              color="white-10"
-              mt="0"
-              mb="4.8rem"
-              fontWeight="extra-bold"
-            >
-              ready to tell a story.
-            </Text>
-            <Text
-              fontSize="2rem"
-              color="grey"
-              mb="4.8rem"
-              maxWidth="50rem"
-              fontWeight="thin"
-            >
-              SMAC is a collection of 10,000 Generative pieces of art with
-              references from an upcoming comic book. The collection focuses on
-              characters and their stylised appearance as well as their part in
-              the story arc based on the SMAC comic book.
-            </Text>
-          </Box>
-          <Box ml="8rem">
-            <Image
-              src="/static/images/spaceman-4.png"
-              height="490"
-              width="490"
-              quality="75"
-            />
-          </Box>
-        </Box>
-
-        {/* <------------------ REPETITVE CONTENT TO BE DELETED LATER ENDS ------------------> */}
+        <Box
+          className="body-stroke"
+          bg="red-20"
+          height="6rem"
+          width="100vw"
+          zIndex={100}
+          position="absolute"
+          top="0"
+          left="0"
+          css={`
+            clip-path: polygon(0% 0%, 100% 0%, 100% 10%, 50% 100%, 0% 10%);
+          `}
+        />
+        <Overview />
+        <GallerySlide />
+        <Roadmap title="Roadmap" roadmap={ROADMAP} />
+        <Box mb={{ mobS: "wxs", tabS: "wxl", deskM: "16rem" }} />
+        <Roadmap title="Post-Sale Roadmap" roadmap={POST_SALE_ROADMAP} />
+        <TeamSection />
+        <SocialMedia />
+        <Footer />
       </Box>
     </Box>
   );
-};
+});
 
 export default HomeComp;
