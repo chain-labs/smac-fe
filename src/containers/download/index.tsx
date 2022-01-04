@@ -35,7 +35,6 @@ const DownloadNftComp = ({ abi }) => {
 		const getAddress = async () => {
 			try {
 				const address = await signer?.getAddress();
-				console.log(typeof address);
 				setOwnerAddress(address);
 			} catch (err) {
 				console.log(err);
@@ -45,7 +44,6 @@ const DownloadNftComp = ({ abi }) => {
 	}, [signer, provider]);
 
 	useEffect(() => {
-		console.log(SMAC);
 		const ownerTokens = [];
 		const getTokens = async () => {
 			try {
@@ -57,9 +55,7 @@ const DownloadNftComp = ({ abi }) => {
 				myTokens.map((c) => {
 					ownerTokens.push(parseInt(c));
 				});
-				console.log(ownerTokens);
 				setOwnerTokens(ownerTokens);
-				console.log(projectURI);
 				setProjectURI(projectURI);
 				setLoadingURI(loadingURI);
 			} catch (e) {
@@ -114,18 +110,24 @@ const DownloadNftComp = ({ abi }) => {
 			<Box mb="3.8rem">
 				<Navbar />
 			</Box>
-			<Box ml={{ tabS: "14rem", deskL: "21rem" }}>
+			<Box ml={{ tabS: "14rem", deskL: "21rem" }} mx="mxl">
 				<Box mb="4.8rem">
 					<Text as="h2" color="red-10" mb="2.6rem">
 						Welcome to Space Man Astro Club!{" "}
 					</Text>
-					<Text as="b1" color="white-10">
+					<Text as="b1" color="white-10" display={{ mobS: "none", deskM: "flex" }}>
 						{ownerTokens.length != 0
 							? projectURI != ""
 								? "Here are your tokens:"
 								: "Tokens Will be revealed soon"
 							: "You have not bought any spaceman click on the button below to buy spacemen"}
 					</Text>
+					<Text as="b1" color="white-10" display={{ mobS: "flex", deskM: "none" }}>
+						Please use your laptop to download your tokens.
+					</Text>
+				</Box>
+				<Box >
+					
 				</Box>
 				{ownerTokens.length != 0 ? (
 					<Box

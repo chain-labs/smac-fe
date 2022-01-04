@@ -19,7 +19,6 @@ const OwnedTokenComp = ({ abi, ownerAddress }) => {
 	const [format, setFormat] = useState<string>("");
 
 	useEffect(() => {
-		console.log(SMAC);
 		const ownerTokens = [];
 		const getTokens = async () => {
 			try {
@@ -31,9 +30,7 @@ const OwnedTokenComp = ({ abi, ownerAddress }) => {
 				myTokens.map((c) => {
 					ownerTokens.push(parseInt(c));
 				});
-				console.log(ownerTokens);
 				setOwnerTokens(ownerTokens);
-				console.log(projectURI);
 				setProjectURI(projectURI);
 				setLoadingURI(loadingURI);
 			} catch (e) {
@@ -58,10 +55,10 @@ const OwnedTokenComp = ({ abi, ownerAddress }) => {
 	};
 
 	return (
-		<Box display="flex" ml="16rem" flexWrap="wrap">
+		<Box display="flex" ml={{mobS:"mxl",tabM:"16rem"}} mt="2rem" flexWrap="wrap">
 			{baseId &&
 				ownerTokens?.map((_, i) => (
-					<Box mt="3rem" key={i * i}>
+					<Box mt="3rem" key={i * i} display={{mobS:"none",deskM:"flex"}}>
 						<Box
 							mb="2rem"
 							mr="mxl"
@@ -76,7 +73,12 @@ const OwnedTokenComp = ({ abi, ownerAddress }) => {
 							/>{" "}
 						</Box>
 					</Box>
-				))}
+				))
+				
+				}
+			<Text as="b1" color="white-10" display={{ mobS: "flex", deskM: "none" }}>
+				Please use your laptop to view your tokens.
+			</Text>
 		</Box>
 	);
 };

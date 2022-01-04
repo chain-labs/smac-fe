@@ -17,17 +17,13 @@ const AllTokens = ({ abi }) => {
 	const [baseId, setBaseId] = useState<string>("");
 
 	useEffect(() => {
-		console.log(SMAC);
 		const ownerTokens = [];
 		const getTokens = async () => {
 			try {
 				const projectURI = await SMAC.callStatic.projectURI();
 				const tokensCount = await SMAC.callStatic.tokensCount(
-				);
-				
-				console.log(parseInt(tokensCount));
+				);				
 				setAllTokens([...Array(parseInt(tokensCount))].map((_, i) => i + 1));
-				console.log(projectURI);
 				setProjectURI(projectURI);
 			} catch (e) {
 				console.log(e);
