@@ -7,7 +7,7 @@ import { ethers } from "ethers";
 import axios from "axios";
 import {
   CONTRACT_ABI_URL,
-  CONTRACT_POLYGON_ADDRESS,
+  CONTRACT_ADDRESS,
 } from "src/utils/constants";
 import { statuses } from "src/containers/home";
 

@@ -9,6 +9,7 @@ const TeamSection = () => {
       mt={{ mobS: "16.4rem", tabS: "15rem", deskM: "22.6rem" }}
       mx="auto"
       width={{ mobS: "90vw", deskM: "112rem" }}
+      id="team"
     >
       <Text as="h2" color="red-20" mb="wm">
         The team

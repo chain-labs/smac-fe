@@ -12,6 +12,7 @@ import { gsap } from "gsap";
 import Twitter from "images/icons/twitter-fill.svg";
 import Discord from "images/icons/discord-fill.svg";
 import Instagram from "images/icons/instagram-fill.svg";
+import { useRouter } from "next/dist/client/router";
 
 const NavLink = ({ href, text }) => {
   return (
@@ -28,6 +29,8 @@ const NavLink = ({ href, text }) => {
 };
 
 const Navbar = () => {
+  const router = useRouter()
+
   const openDrawer = () => {
     gsap.fromTo(
       "#drawer",
@@ -49,7 +52,7 @@ const Navbar = () => {
   };
 
   return (
-    <Box overflowX="hidden">
+    <Box>
       <Box
         id="drawer"
         position="fixed"
@@ -60,7 +63,7 @@ const Navbar = () => {
         zIndex={100}
         display="none"
         pl={{ mobS: "mxxxl", tabS: "wxxs" }}
-      >
+       >
         <Box
           width={{ mobS: "32px", tabS: "64px" }}
           bg="none"
@@ -95,20 +98,21 @@ const Navbar = () => {
         </Box>
       </Box>
       <Box
-        position="absolute"
+        position="relative"
         top="0"
         left="0"
         width="100vw"
         between
         overflow="hidden"
         mt={{ mobS: "mxxxl", deskM: "wxxs" }}
+        justifyContent={{mobS:"center",tabS:"flex-start"}}
       >
         <Box
           id="navbar"
           row
           between
-          mx="auto"
-          width={{ mobS: "90vw", deskM: "116rem" }}
+          mx={{mobS:"0",tabS:"14rem",deskL:"21rem"}}
+          width={{ mobS: "90vw", tabS: "146rem" }}
         >
           <Box
             height={{ mobS: "3.6rem", tabS: "6rem", deskM: "7.2rem" }}
@@ -119,16 +123,16 @@ const Navbar = () => {
             <Image src="/static/images/brand.svg" layout="fill" quality="100" />
           </Box>
           <Box row display={{ mobS: "none", tabL: "flex" }}>
-            <Text fontSize="2rem" fontWeight="medium" color="white-10" mr="wm">
+            <Text fontSize="2rem" fontWeight="medium" color="white-10" cursor="pointer" mr="wm" onClick={()=>router.push("/#about")}>
               About
             </Text>
-            <Text fontSize="2rem" fontWeight="medium" color="white-10" mr="wm">
+            <Text fontSize="2rem" fontWeight="medium" color="white-10" cursor="pointer" mr="wm" onClick={()=>router.push("/#roadmap")}>
               Roadmap
             </Text>
-            <Text fontSize="2rem" fontWeight="medium" color="white-10" mr="wm">
+            <Text fontSize="2rem" fontWeight="medium" color="white-10" cursor="pointer" mr="wm" onClick={()=>router.push("/#team")}>
               Team
             </Text>
-            <Text fontSize="2rem" fontWeight="medium" color="white-10">
+            <Text fontSize="2rem" fontWeight="medium" color="white-10" cursor="pointer" onClick={()=>router.push("/gallery")} >
               Gallery
             </Text>
           </Box>

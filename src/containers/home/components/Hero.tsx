@@ -11,13 +11,14 @@ import { DISCORD_INVITE } from "../utils";
 
 const Hero = ({ status, setStatus, projectDetails, setDisplayModal }) => {
   const state = useContext(StatesContext);
+  
   return (
     <Box
       column
       center
       minWidth="70%"
       zIndex={3}
-      mt={{ mobS: "16rem", deskM: "25rem" }}
+      mt={{ mobS: "16rem", deskM: "14.9rem" }}
     >
       <Text
         id="headline"
