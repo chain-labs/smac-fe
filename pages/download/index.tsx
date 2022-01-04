@@ -11,11 +11,7 @@ const index = () => {
     const [abi, setAbi] = useState<any>()
     const getContract = async () => {
         const abi = await axios(CONTRACT_ABI_URL);
-        console.log(abi);
-        console.log({ CONTRACT_ADDRESS });
-    
         setAbi(JSON.parse(abi.data.result));
-        console.log(JSON.parse(abi.data.result))
       };
 
       

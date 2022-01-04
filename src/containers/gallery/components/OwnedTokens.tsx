@@ -55,13 +55,13 @@ const OwnedTokenComp = ({ abi, ownerAddress }) => {
 	};
 
 	return (
-		<Box display="flex" ml={{mobS:"mxl",tabM:"16rem"}} mt="2rem" flexWrap="wrap">
+		<Box display="flex" ml={{mobS:"mxl",deskM:"16rem"}} mt="2rem" flexWrap="wrap">
 			{baseId &&
 				ownerTokens?.map((_, i) => (
 					<Box mt="3rem" key={i * i} display={{mobS:"none",deskM:"flex"}}>
 						<Box
 							mb="2rem"
-							mr="mxl"
+							mr="mxxl"
 							backgroundColor="white"
 							position="relative"
 							height={{ tabS: "19.6rem", deskL: "23rem" }}

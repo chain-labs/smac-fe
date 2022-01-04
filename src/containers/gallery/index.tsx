@@ -36,7 +36,6 @@ const GalleryPageComp = () => {
     const getAddress = async () => {
       try {
         const address = await signer?.getAddress();
-        console.log(typeof address);
         setOwnerAddress(address);
       } catch (err) {
         console.log(err);
@@ -47,9 +46,6 @@ const GalleryPageComp = () => {
 
   const getContract = async () => {
     const abi = await axios(CONTRACT_ABI_URL);
-    console.log(abi);
-    console.log({ CONTRACT_ADDRESS });
-
     setAbi(JSON.parse(abi.data.result));
   };
 

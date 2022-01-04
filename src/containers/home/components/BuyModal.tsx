@@ -79,8 +79,6 @@ const BuyModal = ({
     }
   }, [numberOfTokens]);
 
-  console.log({ salePrice });
-
   const buyAction = async () => {
     const buyFunctionName = {
       PRESALE_ACTIVE: "presaleBuy(uint256)",

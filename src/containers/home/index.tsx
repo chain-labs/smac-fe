@@ -47,9 +47,6 @@ const HomeComp = React.memo(() => {
 
   const getContract = async () => {
     const abi = await axios(CONTRACT_ABI_URL);
-    console.log(abi);
-    console.log({ CONTRACT_ADDRESS });
-
     setAbi(JSON.parse(abi.data.result));
   };
 
@@ -58,8 +55,6 @@ const HomeComp = React.memo(() => {
   }, []);
 
   useEffect(() => {
-    console.log({ SMAC });
-
     const getDetails = async () => {
       try {
         const presaleTime = await SMAC?.callStatic?.presaleStartTime();
@@ -89,7 +84,6 @@ const HomeComp = React.memo(() => {
           isPresaleActive,
           isSaleActive,
         });
-        console.log({ presalePrice });
       } catch (error) {
         console.log({ error });
       }

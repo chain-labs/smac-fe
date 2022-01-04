@@ -32,7 +32,6 @@ const CountdownTimer = ({
     if (deadline) {
       const now = new Date();
       const target = new Date(parseInt(deadline) * 1000);
-      console.log({ target });
 
       const diff = differenceInSeconds(target, now);
 

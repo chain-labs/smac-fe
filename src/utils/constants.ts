@@ -45,7 +45,6 @@ export const convertToNetworkId = (network) => networkIds[network];
 
 export const getUnit = () => {
   const network = getNetwork();
-  console.log({ network, unit: networkUnits[network] });
   return networkUnits[network];
 };
 
