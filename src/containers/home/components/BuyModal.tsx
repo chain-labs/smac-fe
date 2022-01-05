@@ -35,6 +35,7 @@ const BuyModal = ({
   const [total, setTotal] = useState(null);
   const [step, setStep] = useState(1);
   const [unit, setUnit] = useState(getUnit());
+  const [browser, setBrowser] = useState("chrome");
 
   const state = useContext(StatesContext);
 
@@ -97,6 +98,18 @@ const BuyModal = ({
     });
   };
 
+  useLayoutEffect(() => {
+    const agent = window.navigator.userAgent.toLowerCase();
+    switch (true) {
+      case agent.indexOf("edge") > 1:
+      case agent.indexOf("edg/") > -1:
+      case agent.indexOf("opr") > -1:
+      case agent.indexOf("firefox") > -1:
+        setBrowser("firefox");
+        break;
+    }
+  }, []);
+
   return (
     <Modal>
       <Box
@@ -104,10 +117,13 @@ const BuyModal = ({
         top="50%"
         left="50%"
         transform="translate(-50%, -50%)"
-        bg={`${theme.colors["white-10"]}32`}
+        bg={`${theme.colors["black-10"]}`}
         box-shadow="inset 1.33333px -1.33333px 1.33333px rgba(157, 157, 157, 0.4), inset 2.66667px -2.66667px 2.66667px rgba(255, 255, 255, 0.4), inset -1.33333px 1.33333px 1.33333px rgba(255, 255, 255, 0.4), inset -2.66667px 2.66667px 2.66667px rgba(157, 157, 157, 0.4);"
         css={`
           backdrop-filter: blur(20px);
+          background: ${browser !== "firefox"
+            ? `${theme.colors["black-10"]}80`
+            : `${theme.colors["black-10"]}`};
         `}
         border="1px solid"
         borderColor={`${theme.colors["white-10"]}50`}

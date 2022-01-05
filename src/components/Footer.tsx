@@ -1,10 +1,25 @@
 import Box from "./Box";
 import Image from "next/image";
 import Text from "./Text";
+import { CONTRACT_ADDRESS, LOREM_IPSUM } from "src/utils/constants";
+import {
+  DISCORD_INVITE,
+  INSTAGRAM_HANDLE,
+  TWITTER_HANDLE,
+} from "src/containers/home/utils";
+import Modal from "./Modal";
+import If from "./If";
+import { useState } from "react";
+import TnCModal from "./TnCModal";
 
 const Footer = () => {
+  const [displayTnC, setDisplayTnC] = useState(false);
   return (
     <Box pt={{ mobS: "mxxxl", tabS: "wxxl" }} pb="wxxs">
+      <If
+        condition={displayTnC}
+        then={<TnCModal setDisplayTnC={setDisplayTnC} />}
+      />
       <Box
         display="flex"
         flexDirection={{ mobS: "column", tabS: "row" }}
@@ -26,7 +41,7 @@ const Footer = () => {
           <Box column mr="wxxs" mb={{ mobS: "wxxs", tabS: "0" }} order={1}>
             <Box
               as="a"
-              href=""
+              href="#about"
               fontSize="1.8rem"
               fontWeight="300"
               color="#EAEAEA"
@@ -36,7 +51,7 @@ const Footer = () => {
             </Box>
             <Box
               as="a"
-              href=""
+              href="#roadmap"
               fontSize="1.8rem"
               fontWeight="300"
               color="#EAEAEA"
@@ -46,7 +61,7 @@ const Footer = () => {
             </Box>
             <Box
               as="a"
-              href=""
+              href="#team"
               fontSize="1.8rem"
               fontWeight="300"
               color="#EAEAEA"
@@ -56,7 +71,7 @@ const Footer = () => {
             </Box>
             <Box
               as="a"
-              href=""
+              href="/gallery"
               fontSize="1.8rem"
               fontWeight="300"
               color="#EAEAEA"
@@ -67,7 +82,8 @@ const Footer = () => {
           <Box column mr="wxxs" order={{ mobS: 3, tabL: 2 }}>
             <Box
               as="a"
-              href=""
+              href={DISCORD_INVITE}
+              target="_blank"
               fontSize="1.8rem"
               fontWeight="300"
               color="#EAEAEA"
@@ -77,7 +93,8 @@ const Footer = () => {
             </Box>
             <Box
               as="a"
-              href=""
+              href={INSTAGRAM_HANDLE}
+              target="_blank"
               fontSize="1.8rem"
               fontWeight="300"
               color="#EAEAEA"
@@ -87,7 +104,8 @@ const Footer = () => {
             </Box>
             <Box
               as="a"
-              href=""
+              href={TWITTER_HANDLE}
+              target="_blank"
               fontSize="1.8rem"
               fontWeight="300"
               color="#EAEAEA"
@@ -97,8 +115,8 @@ const Footer = () => {
           </Box>
           <Box column order={{ mobS: 2, tabL: 3 }}>
             <Box
-              as="a"
-              href=""
+              onClick={() => setDisplayTnC(true)}
+              cursor="pointer"
               fontSize="1.8rem"
               fontWeight="300"
               color="#EAEAEA"
@@ -108,7 +126,8 @@ const Footer = () => {
             </Box>
             <Box
               as="a"
-              href=""
+              href="https://opensea.io/explore-collections/"
+              target="_blank"
               fontSize="1.8rem"
               fontWeight="300"
               color="#EAEAEA"
@@ -118,17 +137,18 @@ const Footer = () => {
             </Box>
             <Box
               as="a"
-              href=""
+              href={`https://polygonscan.com/address/${CONTRACT_ADDRESS}`}
+              target="_blank"
               fontSize="1.8rem"
               fontWeight="300"
               color="#EAEAEA"
             >
-              View on Etherscan
+              View on Polygonscan
             </Box>
           </Box>
         </Box>
       </Box>
-      <Box mx="auto" center>
+      <Box as="a" href="https://simplrdao.com" target="_blank" mx="auto" center>
         <Text fontSize="1.6rem" fontWeight="thin" textDecoration="underline">
           Powered by Simplr
         </Text>
