@@ -135,6 +135,7 @@ const BuyModal = ({
           mt="mxl"
           mr="mxl"
           cursor="pointer"
+          color="white"
         >
           <CloseIcon />
         </Box>
