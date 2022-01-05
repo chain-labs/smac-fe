@@ -4,7 +4,6 @@ export const PINATA_KEY_SECRET = process.env.NEXT_PUBLIC_IPFS_PINATA_API_SECRET;
 export const PINATA_URL = "https://api.pinata.cloud/";
 
 // export const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
-
 // export const CONTRACT_ABI_URL = `https://api.polygonscan.com/api?module=contract&action=getabi&address=${CONTRACT_POLYGON_ADDRESS}&apikey=${API_KEY}`;
 
 export const networkIds = {

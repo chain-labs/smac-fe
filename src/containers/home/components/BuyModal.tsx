@@ -36,7 +36,6 @@ const BuyModal = ({
   const [step, setStep] = useState(1);
   const [unit, setUnit] = useState(getUnit());
   const [browser, setBrowser] = useState("chrome");
-
   const state = useContext(StatesContext);
 
   const SMAC = useContract(CONTRACT_ADDRESS, abi, state.provider);
@@ -109,7 +108,6 @@ const BuyModal = ({
         break;
     }
   }, []);
-
   return (
     <Modal>
       <Box
